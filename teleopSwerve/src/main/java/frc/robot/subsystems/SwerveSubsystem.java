@@ -15,11 +15,14 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
+import com.ctre.phoenix6.hardware.core.CoreCANcoder;
+
 // no absolute encoder yet
 class SwerveModule {
     // define all variables
     private CANSparkMax driveMotor;
     private CANSparkMax steeringMotor;
+    private CoreCANcoder absoluteEncoder;
 
     private RelativeEncoder driveEncoder;
     private RelativeEncoder steeringEncoder;
@@ -31,6 +34,9 @@ class SwerveModule {
      * @return RelativeEncoder
      */
     private RelativeEncoder createEncoder(CANSparkMax controller) {
+        // should be able to be used for both driving and turning encoder
+        // driving relative encoder only cares about velocity
+        // turning relative encoder only cares about position
         RelativeEncoder encoder = controller.getEncoder();
 
         // convert from native unit of rotation to radians
@@ -38,6 +44,7 @@ class SwerveModule {
 
         // convert from native unit of rpm to m/s
         encoder.setVelocityConversionFactor(Math.PI / 15 / 39.3701);
+        encoder.setPosition(absoluteEncoder.getPosition().getValueAsDouble()-0.5);
 
         return encoder;
     }
@@ -61,14 +68,17 @@ class SwerveModule {
 
     public SwerveModule(
         int driveMotorPort,
-        int steeringMotorPort
+        int steeringMotorPort,
+        int absoluteEncoderPort
     ) {
         System.out.println("Swerve module constructor");
         driveMotor = new CANSparkMax(driveMotorPort, MotorType.kBrushless);
         steeringMotor = new CANSparkMax(steeringMotorPort, MotorType.kBrushless);
-
+        absoluteEncoder = new CoreCANcoder(absoluteEncoderPort);
+        
         driveEncoder = createEncoder(driveMotor);
         steeringEncoder = createEncoder(steeringMotor);
+        
     
         // initialize pid controllers
         // need to tune p values
@@ -89,6 +99,10 @@ class SwerveModule {
 
     public double getVelocity() {
         return driveEncoder.getVelocity();
+    }
+
+    public double getAbsoluteEncoder() {
+        return absoluteEncoder.getPosition().getValueAsDouble();
     }
 
     public void setDesiredState(SwerveModuleState newState) {
@@ -112,6 +126,12 @@ class SwerveModule {
 
     }
 
+    public SwerveModuleState zeroState(){
+        double absoluteEncoderPos = Math.PI - referenceRadianAngle(absoluteEncoder.getPosition().getValueAsDouble());
+        return new SwerveModuleState(0.0, new Rotation2d(absoluteEncoderPos));
+
+    }
+
     public void periodic() {
         
     }
@@ -121,10 +141,10 @@ class SwerveModule {
 public class SwerveSubsystem extends SubsystemBase{
     
     // list of 4 swerve modules
-    SwerveModule frontLeftModule = new SwerveModule(30, 21);
-    SwerveModule frontRightModule = new SwerveModule(20, 31);
-    SwerveModule backLeftModule = new SwerveModule(51, 61);
-    SwerveModule backRightModule = new SwerveModule(50, 10);
+    SwerveModule frontLeftModule = new SwerveModule(30, 21, 1);
+    SwerveModule frontRightModule = new SwerveModule(20, 31, 2);
+    SwerveModule backLeftModule = new SwerveModule(51, 61, 3);
+    SwerveModule backRightModule = new SwerveModule(50, 10, 4);
     
     
     double chassisWidth = Units.inchesToMeters(30);
