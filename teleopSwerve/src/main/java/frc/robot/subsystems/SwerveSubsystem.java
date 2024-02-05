@@ -83,7 +83,7 @@ class SwerveModule {
         // initialize pid controllers
         // need to tune p values
         drivePIDController = new PIDController(0.5, 0, 0);
-        steeringPIDController = new PIDController(0.175, 0, 0);
+        steeringPIDController = new PIDController(0.1, 0, 0);
         steeringPIDController.enableContinuousInput(-90, 90);
         
         currentState = new SwerveModuleState();
@@ -126,11 +126,11 @@ class SwerveModule {
 
     }
 
-    public SwerveModuleState zeroState(){
-        double absoluteEncoderPos = Math.PI - referenceRadianAngle(absoluteEncoder.getPosition().getValueAsDouble());
-        return new SwerveModuleState(0.0, new Rotation2d(absoluteEncoderPos));
+    // public SwerveModuleState zeroState(){
+    //     double absoluteEncoderPos = Math.PI - referenceRadianAngle(absoluteEncoder.getPosition().getValueAsDouble());
+    //     return new SwerveModuleState(0.0, new Rotation2d(absoluteEncoderPos));
 
-    }
+    // }
 
     public void periodic() {
         
@@ -141,10 +141,10 @@ class SwerveModule {
 public class SwerveSubsystem extends SubsystemBase{
     
     // list of 4 swerve modules
-    SwerveModule frontLeftModule = new SwerveModule(30, 21, 1);
-    SwerveModule frontRightModule = new SwerveModule(20, 31, 2);
+    SwerveModule frontLeftModule = new SwerveModule(30, 40, 1);
+    SwerveModule frontRightModule = new SwerveModule(21, 20, 2);
     SwerveModule backLeftModule = new SwerveModule(51, 61, 3);
-    SwerveModule backRightModule = new SwerveModule(50, 10, 4);
+    SwerveModule backRightModule = new SwerveModule(10, 11, 4);
     
     
     double chassisWidth = Units.inchesToMeters(30);
