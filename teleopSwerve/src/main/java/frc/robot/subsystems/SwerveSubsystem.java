@@ -44,6 +44,11 @@ class SwerveModule {
 
         // convert from native unit of rpm to m/s
         encoder.setVelocityConversionFactor(Math.PI / 15 / 39.3701);
+
+        // don't know if this is correct
+        // will the set position conversion factor take care of it
+        // or is it necessary to convert the absolute encoder position into 
+        // native unit of relative encoder
         encoder.setPosition(absoluteEncoder.getPosition().getValueAsDouble()-0.5);
 
         return encoder;
