@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 
 // no absolute encoder yet
@@ -54,6 +54,21 @@ class SwerveModule {
         return encoder;
     }
 
+    private CANSparkMax createMotorController(int port, boolean isInverted) {
+        CANSparkMax controller = new CANSparkMax(port, MotorType.kBrushless);
+        controller.restoreFactoryDefaults();
+
+        controller.enableVoltageCompensation(10);
+        controller.setIdleMode(IdleMode.kCoast);
+        controller.setOpenLoopRampRate(0.05);
+        controller.setClosedLoopRampRate(0.05); 
+
+        controller.setSmartCurrentLimit(30);
+
+        controller.setInverted(isInverted);
+        return controller;
+    }
+
     public static double fmod(double a, double b) {
         int result = (int) Math.floor(a / b);
         return a - result * b;
@@ -76,9 +91,11 @@ class SwerveModule {
         int steeringMotorPort,
         int absoluteEncoderPort
     ) {
-        System.out.println("Swerve module constructor");
-        driveMotor = new CANSparkMax(driveMotorPort, MotorType.kBrushless);
-        steeringMotor = new CANSparkMax(steeringMotorPort, MotorType.kBrushless);
+
+        // driveMotor = new CANSparkMax(driveMotorPort, MotorType.kBrushless);
+        // steeringMotor = new CANSparkMax(steeringMotorPort, MotorType.kBrushless);
+        driveMotor = createMotorController(driveMotorPort, false);
+        steeringMotor = createMotorController(steeringMotorPort, false);
         absoluteEncoder = new CoreCANcoder(absoluteEncoderPort);
         
         driveEncoder = createEncoder(driveMotor);
@@ -131,11 +148,6 @@ class SwerveModule {
 
     }
 
-    // public SwerveModuleState zeroState(){
-    //     double absoluteEncoderPos = Math.PI - referenceRadianAngle(absoluteEncoder.getPosition().getValueAsDouble());
-    //     return new SwerveModuleState(0.0, new Rotation2d(absoluteEncoderPos));
-
-    // }
 
     public void periodic() {
         
@@ -222,7 +234,7 @@ public class SwerveSubsystem extends SubsystemBase{
             backRightModule.getAngle().getRadians(),
             backRightModule.getVelocity(),
         };
-        double controlerState[] = {
+        double controllerState[] = {
             frontLeftModule.getState().angle.getRadians(),
             frontLeftModule.getState().speedMetersPerSecond,
             frontRightModule.getState().angle.getRadians(),
@@ -234,6 +246,6 @@ public class SwerveSubsystem extends SubsystemBase{
         };
         
         SmartDashboard.putNumberArray("SwerveModuleStates", loggingState);
-        SmartDashboard.putNumberArray("ControllerStates", controlerState);
+        SmartDashboard.putNumberArray("ControllerStates", controllerState);
     }
 }
