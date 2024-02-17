@@ -49,7 +49,8 @@ class SwerveModule {
         // will the set position conversion factor take care of it
         // or is it necessary to convert the absolute encoder position into 
         // native unit of relative encoder
-        encoder.setPosition(absoluteEncoder.getPosition().getValueAsDouble()-0.5);
+
+        encoder.setPosition(absoluteEncoder.getAbsolutePosition().getValueAsDouble());
 
         return encoder;
     }
@@ -68,6 +69,10 @@ class SwerveModule {
         controller.setInverted(isInverted);
         return controller;
     }
+
+    // public void compensate() {
+    //     absoluteEncoder.set
+    // }
 
     public static double fmod(double a, double b) {
         int result = (int) Math.floor(a / b);
@@ -119,6 +124,10 @@ class SwerveModule {
         return new Rotation2d(referenceRadianAngle(steeringEncoder.getPosition()));
     }
 
+    public double absoluteEncoderPos() {
+        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+    }
+
     public double getVelocity() {
         return driveEncoder.getVelocity();
     }
@@ -158,14 +167,14 @@ class SwerveModule {
 public class SwerveSubsystem extends SubsystemBase{
     
     // list of 4 swerve modules
-    SwerveModule frontLeftModule = new SwerveModule(30, 40, 1);
-    SwerveModule frontRightModule = new SwerveModule(21, 20, 2);
-    SwerveModule backLeftModule = new SwerveModule(51, 61, 3);
-    SwerveModule backRightModule = new SwerveModule(10, 11, 4);
+    SwerveModule frontLeftModule = new SwerveModule(10, 11, 1);
+    SwerveModule frontRightModule = new SwerveModule(20, 21, 2);
+    SwerveModule backLeftModule = new SwerveModule(30, 31, 3);
+    SwerveModule backRightModule = new SwerveModule(40, 41, 4);
     
     
-    double chassisWidth = Units.inchesToMeters(30);
-    double chassisLength = Units.inchesToMeters(30);
+    double chassisWidth = Units.inchesToMeters(23);
+    double chassisLength = Units.inchesToMeters(23);
 
     // Defining the location of the wheels relative to the center of the robot
     Translation2d frontLeftLocation = new Translation2d(chassisLength / 2, chassisWidth / 2);
@@ -247,5 +256,7 @@ public class SwerveSubsystem extends SubsystemBase{
         
         SmartDashboard.putNumberArray("SwerveModuleStates", loggingState);
         SmartDashboard.putNumberArray("ControllerStates", controllerState);
+        SmartDashboard.putNumber("Absolute Encoder Position", frontLeftModule.absoluteEncoderPos());
+
     }
 }
