@@ -33,13 +33,14 @@ class SwerveModule {
      * @param controller CANSparkMax controller
      * @return RelativeEncoder
      */
-    private RelativeEncoder createEncoder(CANSparkMax controller) {
+    private RelativeEncoder createEncoder(CANSparkMax controller, int id) {
         // should be able to be used for both driving and turning encoder
         // driving relative encoder only cares about velocity
         // turning relative encoder only cares about position
         RelativeEncoder encoder = controller.getEncoder();
 
         // convert from native unit of rotation to radians
+        encoder.setPosition(absoluteEncoder.getAbsolutePosition().getValueAsDouble() + compensate(id-1));
         encoder.setPositionConversionFactor(2 * Math.PI / 12.8);
 
         // convert from native unit of rpm to m/s
@@ -50,7 +51,7 @@ class SwerveModule {
         // or is it necessary to convert the absolute encoder position into 
         // native unit of relative encoder
 
-        encoder.setPosition(absoluteEncoder.getAbsolutePosition().getValueAsDouble());
+        
 
         return encoder;
     }
@@ -70,9 +71,10 @@ class SwerveModule {
         return controller;
     }
 
-    // public void compensate() {
-    //     absoluteEncoder.set
-    // }
+    public double compensate(int id) {
+        double[] offsets = {0.25, 0.3, 0.3, 0.3};
+        return offsets[id];
+    }
 
     public static double fmod(double a, double b) {
         int result = (int) Math.floor(a / b);
@@ -103,8 +105,8 @@ class SwerveModule {
         steeringMotor = createMotorController(steeringMotorPort, false);
         absoluteEncoder = new CoreCANcoder(absoluteEncoderPort);
         
-        driveEncoder = createEncoder(driveMotor);
-        steeringEncoder = createEncoder(steeringMotor);
+        driveEncoder = createEncoder(driveMotor, absoluteEncoderPort);
+        steeringEncoder = createEncoder(steeringMotor, absoluteEncoderPort);
         
     
         // initialize pid controllers
@@ -152,7 +154,7 @@ class SwerveModule {
         // NEED TO CHANGE POSITION TO RADIANS? USING CONVERSION FACTOR (Resolved)
         final var turnOutput = steeringPIDController.calculate(referenceRadianAngle(steeringEncoder.getPosition()), state.angle.getRadians());
 
-        driveMotor.set(driveOutput*0);
+        driveMotor.set(driveOutput*0.1);
         steeringMotor.set(turnOutput);
 
     }
@@ -220,11 +222,11 @@ public class SwerveSubsystem extends SubsystemBase{
         // read data from the controller
         ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
             // pushing forward
-            -controller.getRawAxis(1),
+            controller.getRawAxis(1),
             // pushing left
-            -controller.getRawAxis(0),
+            controller.getRawAxis(0),
             // pushing left will rotate
-            -controller.getRawAxis(4)
+            controller.getRawAxis(4)
         );
         
         setChassisSpeed(newDesiredSpeeds);
