@@ -40,8 +40,9 @@ class SwerveModule {
         RelativeEncoder encoder = controller.getEncoder();
 
         // convert from native unit of rotation to radians
-        encoder.setPosition(absoluteEncoder.getAbsolutePosition().getValueAsDouble() + compensate(id-1));
+        
         encoder.setPositionConversionFactor(2 * Math.PI / 12.8);
+        encoder.setPosition(absoluteEncoder.getAbsolutePosition().getValueAsDouble());
 
         // convert from native unit of rpm to m/s
         encoder.setVelocityConversionFactor(Math.PI / 15 / 39.3701);
@@ -71,8 +72,8 @@ class SwerveModule {
         return controller;
     }
 
-    public double compensate(int id) {
-        double[] offsets = {0.25, 0.3, 0.3, 0.3};
+    public double compensate(int id, double offset) {
+        double[] offsets = {offset, 0.3, 0.3, 0.3};
         return offsets[id];
     }
 
@@ -101,6 +102,7 @@ class SwerveModule {
 
         // driveMotor = new CANSparkMax(driveMotorPort, MotorType.kBrushless);
         // steeringMotor = new CANSparkMax(steeringMotorPort, MotorType.kBrushless);
+        SmartDashboard.putNumber("Offset", 0.0);
         driveMotor = createMotorController(driveMotorPort, false);
         steeringMotor = createMotorController(steeringMotorPort, false);
         absoluteEncoder = new CoreCANcoder(absoluteEncoderPort);
@@ -134,9 +136,10 @@ class SwerveModule {
         return driveEncoder.getVelocity();
     }
 
-    public double getAbsoluteEncoder() {
-        return absoluteEncoder.getPosition().getValueAsDouble();
+    public double getSteeringEncoder() {
+        return referenceRadianAngle(steeringEncoder.getPosition());
     }
+
 
     public void setDesiredState(SwerveModuleState newState) {
 
@@ -162,6 +165,10 @@ class SwerveModule {
 
     public void periodic() {
         
+    }
+
+    public void init() {
+
     }
 }
 
@@ -222,11 +229,11 @@ public class SwerveSubsystem extends SubsystemBase{
         // read data from the controller
         ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
             // pushing forward
-            controller.getRawAxis(1),
+            -controller.getRawAxis(1),
             // pushing left
-            controller.getRawAxis(0),
+            -controller.getRawAxis(0),
             // pushing left will rotate
-            controller.getRawAxis(4)
+            -controller.getRawAxis(4)
         );
         
         setChassisSpeed(newDesiredSpeeds);
@@ -258,7 +265,9 @@ public class SwerveSubsystem extends SubsystemBase{
         
         SmartDashboard.putNumberArray("SwerveModuleStates", loggingState);
         SmartDashboard.putNumberArray("ControllerStates", controllerState);
-        SmartDashboard.putNumber("Absolute Encoder Position", frontLeftModule.absoluteEncoderPos());
+        SmartDashboard.putNumber("Absolute Position", frontLeftModule.absoluteEncoderPos());
+        SmartDashboard.putNumber("Relative Position", frontLeftModule.getSteeringEncoder());
+        
 
     }
 }
