@@ -113,8 +113,8 @@ class SwerveModule {
     
         // initialize pid controllers
         // need to tune p values
-        drivePIDController = new PIDController(0.5, 0, 0);
-        steeringPIDController = new PIDController(0.1, 0, 0);
+        drivePIDController = new PIDController(0.03, 0, 0);
+        steeringPIDController = new PIDController(0.08, 0, 0);
         steeringPIDController.enableContinuousInput(-90, 90);
         
         currentState = new SwerveModuleState();
@@ -125,7 +125,8 @@ class SwerveModule {
     }
 
     public Rotation2d getAngle() {
-        return new Rotation2d(referenceRadianAngle(steeringEncoder.getPosition()));
+        // return new Rotation2d(referenceRadianAngle(steeringEncoder.getPosition()));
+        return new Rotation2d(absoluteEncoderPos());
     }
 
     public double absoluteEncoderPos() {
@@ -147,7 +148,8 @@ class SwerveModule {
         // NEED TO CHANGE POSITION TO RADIANS? USING CONVERSION FACTOR (Resolved)
         currentState = newState;
 
-        SwerveModuleState state = SwerveModuleState.optimize(newState, new Rotation2d(referenceRadianAngle(steeringEncoder.getPosition())));
+        // SwerveModuleState state = SwerveModuleState.optimize(newState, new Rotation2d(referenceRadianAngle(steeringEncoder.getPosition())));
+        SwerveModuleState state = SwerveModuleState.optimize(newState, new Rotation2d(absoluteEncoderPos()*2*Math.PI));
 
         // Calculate the drive output from the drive PID controller
         // NEED TO CHANGE RPM TO M/S USING CONVERSION FACTOR (Resolved)
@@ -155,9 +157,10 @@ class SwerveModule {
 
         // Calculate the turning motor output from the turning PID controller.
         // NEED TO CHANGE POSITION TO RADIANS? USING CONVERSION FACTOR (Resolved)
-        final var turnOutput = steeringPIDController.calculate(referenceRadianAngle(steeringEncoder.getPosition()), state.angle.getRadians());
+        // final var turnOutput = steeringPIDController.calculate(referenceRadianAngle(steeringEncoder.getPosition()), state.angle.getRadians());
+        final var turnOutput = steeringPIDController.calculate(absoluteEncoderPos()*2*Math.PI, state.angle.getRadians());
 
-        driveMotor.set(driveOutput*0.1);
+        driveMotor.set(driveOutput);
         steeringMotor.set(turnOutput);
 
     }
@@ -229,11 +232,11 @@ public class SwerveSubsystem extends SubsystemBase{
         // read data from the controller
         ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
             // pushing forward
-            -controller.getRawAxis(1),
+            -9 * controller.getRawAxis(1),
             // pushing left
-            -controller.getRawAxis(0),
+            -9 * controller.getRawAxis(0),
             // pushing left will rotate
-            -controller.getRawAxis(4)
+            -9 * controller.getRawAxis(4)
         );
         
         setChassisSpeed(newDesiredSpeeds);
