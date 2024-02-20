@@ -15,7 +15,10 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
+
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
+
+import com.kauailabs.navx.frc.AHRS;
 
 // no absolute encoder yet
 class SwerveModule {
@@ -26,6 +29,8 @@ class SwerveModule {
 
     private RelativeEncoder driveEncoder;
     private RelativeEncoder steeringEncoder;
+
+    private AHRS gyro;
 
     /**
      * Creates an encoder object from NEO with preferred settings
@@ -47,13 +52,6 @@ class SwerveModule {
         // convert from native unit of rpm to m/s
         encoder.setVelocityConversionFactor(Math.PI / 15 / 39.3701);
 
-        // don't know if this is correct
-        // will the set position conversion factor take care of it
-        // or is it necessary to convert the absolute encoder position into 
-        // native unit of relative encoder
-
-        
-
         return encoder;
     }
 
@@ -69,6 +67,9 @@ class SwerveModule {
         controller.setSmartCurrentLimit(30);
 
         controller.setInverted(isInverted);
+
+        // for some reason causes robot to shake:
+        //     controller.burnFlash(); 
         return controller;
     }
 
@@ -106,6 +107,7 @@ class SwerveModule {
         driveMotor = createMotorController(driveMotorPort, false);
         steeringMotor = createMotorController(steeringMotorPort, false);
         absoluteEncoder = new CoreCANcoder(absoluteEncoderPort);
+        gyro = new AHRS();
         
         driveEncoder = createEncoder(driveMotor, absoluteEncoderPort);
         steeringEncoder = createEncoder(steeringMotor, absoluteEncoderPort);
@@ -114,7 +116,7 @@ class SwerveModule {
         // initialize pid controllers
         // need to tune p values
         drivePIDController = new PIDController(0.03, 0, 0);
-        steeringPIDController = new PIDController(0.08, 0, 0);
+        steeringPIDController = new PIDController(0.07, 0, 0);
         steeringPIDController.enableContinuousInput(-90, 90);
         
         currentState = new SwerveModuleState();
@@ -141,6 +143,17 @@ class SwerveModule {
         return referenceRadianAngle(steeringEncoder.getPosition());
     }
 
+    public double getGyroRotation() {
+        return gyro.getAngle() / -360;
+    }
+
+    public double gyroRadian() {
+        return referenceRadianAngle(getGyroRotation());
+    }
+
+    public Rotation2d gyroRotation2d() {
+        return new Rotation2d(referenceRadianAngle(getGyroRotation()));
+    }
 
     public void setDesiredState(SwerveModuleState newState) {
 
@@ -164,7 +177,6 @@ class SwerveModule {
         steeringMotor.set(turnOutput);
 
     }
-
 
     public void periodic() {
         
@@ -232,12 +244,16 @@ public class SwerveSubsystem extends SubsystemBase{
         // read data from the controller
         ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
             // pushing forward
-            -9 * controller.getRawAxis(1),
+            -12 * controller.getRawAxis(1),
+
             // pushing left
-            -9 * controller.getRawAxis(0),
+            
+            -12 * controller.getRawAxis(0),
             // pushing left will rotate
-            -9 * controller.getRawAxis(4)
+            -12 * controller.getRawAxis(4)
         );
+        
+        ChassisSpeeds.fromFieldRelativeSpeeds(newDesiredSpeeds, frontLeftModule.gyroRotation2d());
         
         setChassisSpeed(newDesiredSpeeds);
 
@@ -270,7 +286,7 @@ public class SwerveSubsystem extends SubsystemBase{
         SmartDashboard.putNumberArray("ControllerStates", controllerState);
         SmartDashboard.putNumber("Absolute Position", frontLeftModule.absoluteEncoderPos());
         SmartDashboard.putNumber("Relative Position", frontLeftModule.getSteeringEncoder());
-        
+        SmartDashboard.putNumber("Gyro Angle", frontLeftModule.gyroRadian());
 
     }
 }
