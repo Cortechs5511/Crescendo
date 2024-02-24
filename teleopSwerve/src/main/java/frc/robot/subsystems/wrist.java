@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;;
 
-public class wrist extends SubsystemBase {
+public class Wrist extends SubsystemBase {
     private final CANSparkMax wrist = createWristController(IntakeConstants.WRIST_ID, false);
 
     private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(IntakeConstants.THROUGH_BORE_ID);
 
-
+    public Wrist() {
+        
+    }
     
     public void zeroEncoder() {
         absoluteEncoder.reset();

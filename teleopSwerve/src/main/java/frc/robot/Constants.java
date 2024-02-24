@@ -49,9 +49,9 @@ public final class Constants {
   }
 
   public static class OIConstants {
-    public static final int LEFT_STICK_PORT = 0;
-    public static final int RIGHT_STICK_PORT = 1;
-    public static final int XBOX_CONTROLLER_PORT = 2;
+    
+    public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 0;
 
     public static final double DEADBAND = 0.05;
 
