@@ -39,6 +39,9 @@ public final class Constants {
 
     public static final double RAMP_RATE = 0.05;
 
+    public static final double WRIST_MAX_POWER = 1.0;
+    public static final double INTAKE_MAX_POWER = 1.0;
+
     // 36:1 ratio
     public static final double WRIST_CONVERSION_FACTOR = 36;
     // position of intake when up

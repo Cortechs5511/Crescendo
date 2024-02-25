@@ -7,8 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.intake.setIntakePower;
 import frc.robot.commands.intake.setWristPower;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.Wrist;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,6 +27,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Wrist wrist = new Wrist();
+  private final Intake intake = new Intake();
 
   private final OI oi = OI.getInstance();
 
@@ -37,6 +40,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     wrist.setDefaultCommand(new setWristPower(wrist));
+    intake.setDefaultCommand(new setIntakePower(intake));
     configureBindings();
   }
 

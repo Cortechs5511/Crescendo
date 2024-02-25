@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.IntakeConstants;
 
 public class OI {
     private static OI oi;
@@ -29,79 +30,111 @@ public class OI {
 
 
     public double getDriverLeftY() {
-        return driverController.getLeftY();
+        double value = driverController.getLeftY();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double getOperatorLeftY() {
-        return driverController.getLeftY();
+        double value = operatorController.getLeftY();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double getDriverLeftX() {
-        return driverController.getLeftX();
+        double value = driverController.getLeftX();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double getOperatorLeftX() {
-        return driverController.getLeftX();
+        double value = operatorController.getLeftX();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double getDriverRightY() {
-        return driverController.getRightY();
+        double value = driverController.getRightY();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double getOperatorRightY() {
-        return driverController.getRightY();
+        double value = operatorController.getRightY();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double getDriverRightX() {
-        return driverController.getRightX();
+        double value = driverController.getRightX();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double getOperatorRightX() {
-        return driverController.getRightX();
+        double value = operatorController.getRightX();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double driverLeftTrigger() {
-        return driverController.getLeftTriggerAxis();
+        double value = driverController.getLeftTriggerAxis();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double operatorLeftTrigger() {
-        return operatorController.getLeftTriggerAxis();
+        double value = operatorController.getLeftTriggerAxis();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double driverRightTrigger() {
-        return driverController.getRightTriggerAxis();
+        double value = driverController.getRightTriggerAxis();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
     public double operatorRightTrigger() {
-        return operatorController.getRightTriggerAxis();
+        double value = operatorController.getRightTriggerAxis();
+        if (Math.abs(value) < OIConstants.DEADBAND) {
+            return 0;
+        }
+        return value;
     }
 
-    /**
-     * Returns power for arm 
-     * 1 or 1 if stick is past deadband in both directions
-     * 0 if stick is within deadband
-     * 
-     * @return double controller left joystick power
-     */
+    
     public double getWristPower() {
-        double power = getOperatorLeftY();
-        return power;
+        return getOperatorLeftY() * IntakeConstants.WRIST_MAX_POWER;
     }
 
+    public double getIntakePower() {
+        return operatorLeftTrigger() * IntakeConstants.INTAKE_MAX_POWER;
 
-    /**
-     * Returns the value of left joystick with values within deadband truncated
-     *
-     * @return double value of joystick
-     */
-    // public double getLeftYDeadband() {
-    //     double leftY = getLeftY();
-    //     if (Math.abs(leftY) < OIConstants.DEADBAND) {
-    //         return 0;
-    //     }
+    }
 
-    //     return leftY;
-    // }
 
     /**
      * Sets rumble value of controller to specified intensity
@@ -109,8 +142,11 @@ public class OI {
      * @param intensity double value to set up to 1
      */
     public void setRumble(double intensity) {
-        controller.setRumble(RumbleType.kLeftRumble, intensity);
-        controller.setRumble(RumbleType.kRightRumble, intensity);
+        driverController.setRumble(RumbleType.kLeftRumble, intensity);
+        driverController.setRumble(RumbleType.kRightRumble, intensity);
+
+        operatorController.setRumble(RumbleType.kLeftRumble, intensity);
+        operatorController.setRumble(RumbleType.kRightRumble, intensity);
     }
 
 }

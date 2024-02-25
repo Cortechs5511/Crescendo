@@ -4,32 +4,23 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.IntakeConstants;
 
-public class Wrist extends SubsystemBase {
-    private final CANSparkMax wrist = createWristController(IntakeConstants.WRIST_ID, false);
+public class Intake extends SubsystemBase {
+    private final CANSparkMax topWheels = createIntakeController(IntakeConstants.TOP_WHEEL_ID, false);
+    private final CANSparkMax bottomWheels = createIntakeController(IntakeConstants.TOP_WHEEL_ID, true);
 
-    private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(IntakeConstants.THROUGH_BORE_ID);
-
-    public Wrist() {
+    public Intake() {
 
     }
     
-    public void zeroEncoder() {
-        absoluteEncoder.reset();
-    }
-    
-    public double getWristPosition() {
-        return Math.abs(absoluteEncoder.getAbsolutePosition());
-    }
-
     public void setPower(double speed) {
-        wrist.set(speed);
+        topWheels.set(speed);
+        bottomWheels.set(speed);
     }
-    
-    private CANSparkMax createWristController(int port, boolean isInverted) {
+
+    private CANSparkMax createIntakeController(int port, boolean isInverted) {
         CANSparkMax controller = new CANSparkMax(port, MotorType.kBrushless);
         controller.restoreFactoryDefaults();
 
@@ -43,9 +34,9 @@ public class Wrist extends SubsystemBase {
         controller.setInverted(isInverted);
         return controller;
     }
-    
+
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Arm/Absolute Encoder Value", getWristPosition());
+        
     }
 }
