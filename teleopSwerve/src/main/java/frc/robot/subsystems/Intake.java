@@ -25,11 +25,11 @@ public class Intake extends SubsystemBase {
         controller.restoreFactoryDefaults();
 
         controller.enableVoltageCompensation(IntakeConstants.WRIST_VOLTAGE_COMPENSATION);
-        controller.setIdleMode(IntakeConstants.WRIST_IDLE_MODE);
+        controller.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
         controller.setOpenLoopRampRate(IntakeConstants.RAMP_RATE);
         controller.setClosedLoopRampRate(IntakeConstants.RAMP_RATE); 
 
-        controller.setSmartCurrentLimit(IntakeConstants.WRIST_CURRENT_LIMIT);
+        controller.setSmartCurrentLimit(IntakeConstants.INTAKE_CURRENT_LIMIT);
 
         controller.setInverted(isInverted);
         return controller;

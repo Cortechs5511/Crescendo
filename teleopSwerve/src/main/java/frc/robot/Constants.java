@@ -24,10 +24,11 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    public static final int WRIST_ID = 00;
-    public static final int TOP_WHEEL_ID = 00;
-    public static final int BOTTOM_WHEEL_ID = 00;
-    public static final int THROUGH_BORE_ID = 00;
+    public static final int WRIST_R_ID = 3;
+    public static final int WRIST_L_ID = 4;
+    public static final int TOP_WHEEL_ID = 2;
+    public static final int BOTTOM_WHEEL_ID = 1;
+    public static final int THROUGH_BORE_ID = 9;
 
     public static final double WRIST_VOLTAGE_COMPENSATION = 10;
     
@@ -39,7 +40,7 @@ public final class Constants {
 
     public static final double RAMP_RATE = 0.05;
 
-    public static final double WRIST_MAX_POWER = 1.0;
+    public static final double WRIST_MAX_POWER = 0.5;
     public static final double INTAKE_MAX_POWER = 1.0;
 
     // 36:1 ratio

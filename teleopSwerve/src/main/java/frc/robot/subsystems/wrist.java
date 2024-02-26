@@ -3,13 +3,17 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.IntakeConstants;
 
 public class Wrist extends SubsystemBase {
-    private final CANSparkMax wrist = createWristController(IntakeConstants.WRIST_ID, false);
+    private final CANSparkMax wristR = createWristController(IntakeConstants.WRIST_R_ID, false);
+    private final CANSparkMax wristL = createWristController(IntakeConstants.WRIST_L_ID, false);
 
     private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(IntakeConstants.THROUGH_BORE_ID);
 
@@ -26,7 +30,8 @@ public class Wrist extends SubsystemBase {
     }
 
     public void setPower(double speed) {
-        wrist.set(speed);
+        wristR.set(speed);
+        wristL.set(-speed);
     }
     
     private CANSparkMax createWristController(int port, boolean isInverted) {
