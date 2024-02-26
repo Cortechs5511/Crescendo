@@ -7,20 +7,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.IntakeConstants;
 
-public class Intake extends SubsystemBase {
-    private final CANSparkMax topWheels = createIntakeController(IntakeConstants.TOP_WHEEL_ID, false);
-    private final CANSparkMax bottomWheels = createIntakeController(IntakeConstants.TOP_WHEEL_ID, true);
+public class Feeder extends SubsystemBase {
+    private final CANSparkMax topWheels = createFeederController(IntakeConstants.TOP_WHEEL_ID, false);
 
-    public Intake() {
+    public Feeder() {
 
     }
-    
+
     public void setPower(double power) {
         topWheels.set(power);
-        bottomWheels.set(power);
     }
-
-    private CANSparkMax createIntakeController(int port, boolean isInverted) {
+    
+    private CANSparkMax createFeederController(int port, boolean isInverted) {
         CANSparkMax controller = new CANSparkMax(port, MotorType.kBrushless);
         controller.restoreFactoryDefaults();
 

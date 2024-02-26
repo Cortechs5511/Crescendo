@@ -30,6 +30,8 @@ public final class Constants {
     public static final int BOTTOM_WHEEL_ID = 1;
     public static final int THROUGH_BORE_ID = 9;
 
+    public static final int FEEDER_ID = 5;
+
     public static final double WRIST_VOLTAGE_COMPENSATION = 10;
     
     public static final int WRIST_CURRENT_LIMIT = 50;
@@ -42,15 +44,17 @@ public final class Constants {
 
     public static final double WRIST_MAX_POWER = 0.5;
     public static final double INTAKE_MAX_POWER = 1.0;
+    public static final double FEEDER_MAX_POWER = 0.8;
 
-    // 36:1 ratio
-    public static final double WRIST_CONVERSION_FACTOR = 36;
+    // 50:1 ratio
+    public static final double WRIST_CONVERSION_FACTOR = 50;
     // position of intake when up
     public static final double WRIST_MAX_POS = 0.25;
     // position of intake when down (intaking)
     public static final double WRIST_MIN_POS = 0;
     
   }
+
 
   public static class OIConstants {
     
