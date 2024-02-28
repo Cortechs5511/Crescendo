@@ -132,7 +132,7 @@ class SwerveModule {
     }
 
     public double absoluteEncoderPos() {
-        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+        return absoluteEncoder.getAbsolutePosition().getValueAsDouble()-0.5;
     }
 
     public double getVelocity() {

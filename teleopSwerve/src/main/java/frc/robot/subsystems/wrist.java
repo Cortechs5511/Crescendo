@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.IntakeConstants;
 
 public class Wrist extends SubsystemBase {
-    private final CANSparkMax wristR = createWristController(IntakeConstants.WRIST_R_ID, false);
-    private final CANSparkMax wristL = createWristController(IntakeConstants.WRIST_L_ID, false);
+    private final CANSparkMax wrist = createWristController(IntakeConstants.WRIST_ID, false);
+
 
     private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(IntakeConstants.THROUGH_BORE_ID);
 
@@ -29,8 +29,7 @@ public class Wrist extends SubsystemBase {
     }
 
     public void setPower(double power) {
-        wristR.set(power);
-        wristL.set(-power);
+        wrist.set(power);
     }
     
     private CANSparkMax createWristController(int port, boolean isInverted) {

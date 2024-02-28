@@ -1,5 +1,6 @@
 package frc.robot.commands.intake;
 
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.OI;
 import frc.robot.subsystems.Feeder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,8 +22,8 @@ public class setFeederPower extends Command {
 
     @Override
     public void execute() {
-        feeder.setPower(oi.getFeederPower());
+        feeder.setPower(oi.getIntakePower()*IntakeConstants.FEEDER_MAX_POWER/IntakeConstants.INTAKE_MAX_POWER);
 
-        SmartDashboard.putNumber("OI/Feeder Power", oi.getFeederPower());
+        SmartDashboard.putNumber("OI/Feeder Power", oi.getIntakePower()*IntakeConstants.FEEDER_MAX_POWER/IntakeConstants.INTAKE_MAX_POWER);
     }
 }
