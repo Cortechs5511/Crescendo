@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.Constants.IntakeConstants;
 
 public class OI {
@@ -126,11 +127,16 @@ public class OI {
 
     
     public double getWristPower() {
-        return getOperatorLeftY() * IntakeConstants.WRIST_MAX_POWER;
+        return getOperatorLeftY();
+    }
+
+    public double getWristPosition() {
+        // convert joystick range to 0-1
+        return (getOperatorLeftY()+1)/2;
     }
 
     public double getIntakePower() {
-        return operatorLeftTrigger() * IntakeConstants.INTAKE_MAX_POWER;
+        return operatorLeftTrigger() * IntakeConstants.INTAKE_POWER;
     }
 
     // public double getFeederPower() {

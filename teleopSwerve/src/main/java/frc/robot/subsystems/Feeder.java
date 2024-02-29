@@ -22,7 +22,7 @@ public class Feeder extends SubsystemBase {
         CANSparkMax controller = new CANSparkMax(port, MotorType.kBrushless);
         controller.restoreFactoryDefaults();
 
-        controller.enableVoltageCompensation(IntakeConstants.WRIST_VOLTAGE_COMPENSATION);
+        controller.enableVoltageCompensation(IntakeConstants.VOLTAGE_COMPENSATION);
         controller.setIdleMode(IntakeConstants.INTAKE_IDLE_MODE);
         controller.setOpenLoopRampRate(IntakeConstants.RAMP_RATE);
         controller.setClosedLoopRampRate(IntakeConstants.RAMP_RATE); 

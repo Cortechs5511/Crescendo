@@ -22,8 +22,8 @@ public class setFeederPower extends Command {
 
     @Override
     public void execute() {
-        feeder.setPower(oi.getIntakePower()*IntakeConstants.FEEDER_MAX_POWER/IntakeConstants.INTAKE_MAX_POWER);
+        feeder.setPower(oi.getIntakePower()*IntakeConstants.FEEDER_POWER/IntakeConstants.INTAKE_POWER);
 
-        SmartDashboard.putNumber("OI/Feeder Power", oi.getIntakePower()*IntakeConstants.FEEDER_MAX_POWER/IntakeConstants.INTAKE_MAX_POWER);
+        SmartDashboard.putNumber("OI/Feeder Power", oi.getIntakePower()*IntakeConstants.FEEDER_POWER/IntakeConstants.INTAKE_POWER);
     }
 }

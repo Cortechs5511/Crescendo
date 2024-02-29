@@ -1,16 +1,17 @@
 package frc.robot.commands.intake;
 
-import frc.robot.Constants.WristConstants;
 import frc.robot.OI;
 import frc.robot.subsystems.Wrist;
+import frc.robot.Constants.WristConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class setWristPower extends Command {
+public class setWristPosition extends Command {
     private final Wrist wrist;
     private final OI oi = OI.getInstance();
 
-    public setWristPower(Wrist subsystem) {
+
+    public setWristPosition(Wrist subsystem) {
         wrist = subsystem;
         addRequirements(subsystem);
     }
@@ -21,8 +22,8 @@ public class setWristPower extends Command {
 
     @Override
     public void execute() {
-        wrist.setPower(oi.getWristPower()*WristConstants.MAX_POWER);
+        wrist.setPosition(oi.getWristPower());
     
-        SmartDashboard.putNumber("OI/Wrist Power", oi.getWristPower());
+        // SmartDashboard.putNumber("OI/Wrist Power", oi.getWristPower());
     }
 }

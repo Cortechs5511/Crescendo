@@ -20,38 +20,46 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 3;
+    public static final int OPERATOR_PORT = 3;
   }
 
   public static class IntakeConstants {
-    public static final int WRIST_ID = 3;
+    
     public static final int TOP_WHEEL_ID = 2;
     public static final int BOTTOM_WHEEL_ID = 1;
-    public static final int THROUGH_BORE_ID = 9;
-
+    
     public static final int FEEDER_ID = 5;
 
-    public static final double WRIST_VOLTAGE_COMPENSATION = 10;
     
-    public static final int WRIST_CURRENT_LIMIT = 50;
     public static final int INTAKE_CURRENT_LIMIT = 50;
-
-    public static final IdleMode WRIST_IDLE_MODE = IdleMode.kBrake;
+    public static final double VOLTAGE_COMPENSATION = 10;
     public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kCoast;
-
     public static final double RAMP_RATE = 0.05;
 
-    public static final double WRIST_MAX_POWER = 0.5;
-    public static final double INTAKE_MAX_POWER = 1.0;
-    public static final double FEEDER_MAX_POWER = 0.8;
+    public static final double INTAKE_POWER = 0.5;
+    public static final double FEEDER_POWER = 0.8;
+
+  
+    
+  }
+
+  public static class WristConstants {
+    public static final int WRIST_ID = 3;
+    public static final int THROUGH_BORE_ID = 9;
+
+    public static final double VOLTAGE_COMPENSATION = 10;
+    public static final int CURRENT_LIMIT = 50;
+    public static final IdleMode IDLE_MODE = IdleMode.kBrake;
+    public static final double RAMP_RATE = 0.05;
+    public static final double MAX_POWER = 0.5;
 
     // 50:1 ratio
     public static final double WRIST_CONVERSION_FACTOR = 50;
     // position of intake when up
-    public static final double WRIST_MAX_POS = 0.25;
+    public static final double MAX_POS = 0.25;
     // position of intake when down (intaking)
-    public static final double WRIST_MIN_POS = 0;
-    
+    public static final double MIN_POS = 0;
+
   }
 
   public static class LEDConstants {

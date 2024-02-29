@@ -10,6 +10,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.intake.setFeederPower;
 import frc.robot.commands.intake.setIntakePower;
 import frc.robot.commands.intake.setWristPower;
+import frc.robot.commands.intake.intakeGround;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -37,10 +38,10 @@ public class RobotContainer {
   private final OI oi = OI.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController operatorController =
+      new CommandXboxController(OperatorConstants.OPERATOR_PORT);
 
-  SwerveSubsystem drive = new SwerveSubsystem(m_driverController);
+  SwerveSubsystem drive = new SwerveSubsystem(operatorController);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -66,7 +67,8 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    operatorController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    operatorController.leftBumper().whileTrue(new intakeGround(intake, wrist, feeder, blinkin));
   }
 
   /**
