@@ -14,7 +14,8 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.WristConstants;
 
 public class Wrist extends SubsystemBase {
-    private final CANSparkMax wrist = createWristController(WristConstants.WRIST_ID, false);
+    private final CANSparkMax wristLeft = createWristController(WristConstants.WRIST_L_ID, true);
+    private final CANSparkMax wristRight = createWristController(WristConstants.WRIST_R_ID, false);
     
     private final PIDController wristPIDController = new PIDController(0.03, 0, 0);
 
@@ -38,12 +39,14 @@ public class Wrist extends SubsystemBase {
     }
 
     public void setPower(double power) {
-        wrist.set(power);
+        wristLeft.set(power);
+        wristRight.set(power);
     }
 
     public void setPosition(double position) {
         final double wristOutput = wristPIDController.calculate(absoluteEncoder.getAbsolutePosition(), position);
-        wrist.set(wristOutput);
+        wristLeft.set(wristOutput);
+        wristRight.set(wristOutput);
     }
     
     private CANSparkMax createWristController(int port, boolean isInverted) {

@@ -44,7 +44,8 @@ public final class Constants {
   }
 
   public static class WristConstants {
-    public static final int WRIST_ID = 3;
+    public static final int WRIST_L_ID = 3;
+    public static final int WRIST_R_ID = 4;
     public static final int THROUGH_BORE_ID = 9;
 
     public static final double VOLTAGE_COMPENSATION = 10;
