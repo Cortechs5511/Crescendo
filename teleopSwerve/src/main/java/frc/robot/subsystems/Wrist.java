@@ -43,8 +43,11 @@ public class Wrist extends SubsystemBase {
         wristRight.set(power);
     }
 
+    // set position of wrist given position range from 0.0-1.0 to encoder range
     public void setPosition(double position) {
-        final double wristOutput = wristPIDController.calculate(absoluteEncoder.getAbsolutePosition(), position);
+        double range = WristConstants.MAX_POS-WristConstants.MIN_POS;
+        double translatedPosition = position * range + WristConstants.MIN_POS;
+        final double wristOutput = wristPIDController.calculate(absoluteEncoder.getAbsolutePosition(), translatedPosition);
         wristLeft.set(wristOutput);
         wristRight.set(wristOutput);
     }
