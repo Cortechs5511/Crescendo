@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
@@ -16,6 +17,9 @@ import frc.robot.Constants.WristConstants;
 public class Wrist extends SubsystemBase {
     private final CANSparkMax wristLeft = createWristController(WristConstants.WRIST_L_ID, true);
     private final CANSparkMax wristRight = createWristController(WristConstants.WRIST_R_ID, false);
+
+    private final RelativeEncoder leftRelativeEncoder = createEncoder(wristLeft);
+    private final RelativeEncoder rightRelativeEncoder = createEncoder(wristRight);
     
     private final PIDController wristPIDController = new PIDController(0.03, 0, 0);
 
@@ -23,33 +27,45 @@ public class Wrist extends SubsystemBase {
     private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(WristConstants.THROUGH_BORE_ID);
 
     public Wrist() {
-
+        zero();
     }
     
-    public void zeroEncoder() {
+    public void zero() {
         absoluteEncoder.reset();
+        leftRelativeEncoder.setPosition(0);
+        rightRelativeEncoder.setPosition(0);
     }
+
     
     public double getRawPosition() {
-        return Math.abs(absoluteEncoder.getAbsolutePosition());
+        return absoluteEncoder.getAbsolutePosition();
     }
 
-    public double getPosition() {
-        return WristConstants.MIN_POS+(absoluteEncoder.getAbsolutePosition()/(WristConstants.MIN_POS-WristConstants.MAX_POS));
+    // convert from absolute encoder value to percent position
+    public double getPercentPosition() {
+        return (getRawPosition() - WristConstants.MIN_POS) / WristConstants.RANGE;
     }
 
-    public void setPower(double power) { //wyan
+    public void setPower(double power) {
         wristLeft.set(power);
         wristRight.set(power);
     }
 
     // set position of wrist given position range from 0.0-1.0 to encoder range
-    public void setPosition(double position) {
-        double range = WristConstants.MAX_POS-WristConstants.MIN_POS;
-        double translatedPosition = position * range + WristConstants.MIN_POS;
-        final double wristOutput = wristPIDController.calculate(absoluteEncoder.getAbsolutePosition(), translatedPosition);
+    public void setPosition(double percentPosition) {
+        // convert given position from 0.0-1.0 to through bore encoder range
+        double translatedPosition = percentPosition * WristConstants.RANGE + WristConstants.MIN_POS;
+        final double wristOutput = wristPIDController.calculate(getRawPosition(), translatedPosition);
         wristLeft.set(wristOutput);
         wristRight.set(wristOutput);
+    }
+
+    public double getLeftRelativePosition() {
+        return leftRelativeEncoder.getPosition();
+    }
+
+    public double getRightRelativePosition() {
+        return rightRelativeEncoder.getPosition();
     }
     
     private CANSparkMax createWristController(int port, boolean isInverted) {
@@ -66,10 +82,20 @@ public class Wrist extends SubsystemBase {
         controller.setInverted(isInverted);
         return controller;
     }
+
+    private RelativeEncoder createEncoder(CANSparkMax controller) {
+        RelativeEncoder encoder = controller.getEncoder();
+        encoder.setPositionConversionFactor(WristConstants.POSITION_CONVERSION_FACTOR);
+
+        return encoder;
+    }
     
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Wrist/Absolute Encoder Value", getRawPosition());
-        SmartDashboard.putNumber("Wrist/Persentage PositionValue", getPosition());
+        SmartDashboard.putNumber("Wrist/Percentage Position", getPercentPosition());
+        
+        SmartDashboard.putNumber("Wrist/Left Relative Position", getLeftRelativePosition());
+        SmartDashboard.putNumber("Wrist/Right Relative Position", getRightRelativePosition());
     }
 }

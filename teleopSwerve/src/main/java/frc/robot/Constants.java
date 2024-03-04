@@ -85,16 +85,22 @@ public final class Constants {
     public static final double MAX_POWER = 0.5;
 
     // 50:1 ratio
-    public static final double WRIST_CONVERSION_FACTOR = 50;
+    public static final double POSITION_CONVERSION_FACTOR = 50 * 22 / 12;
     // position of intake when up
     public static final double MAX_POS = 0.25;
     // position of intake when down (intaking)
     public static final double MIN_POS = 0;
+    // range of positions
+    public static final double RANGE = MAX_POS-MIN_POS;
 
   }
 
   public static class LEDConstants {
     public static final int BLINKIN_CHANNEL = 0;
+
+    public static final double RED_ALLIANCE = -0.93;
+    public static final double BLUE_ALLIANCE = -0.95;
+    
   }
 
   public static class OIConstants {

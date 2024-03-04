@@ -7,10 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.setLEDAlliance;
+import frc.robot.commands.swerveDrive;
 import frc.robot.commands.intake.setFeederPower;
 import frc.robot.commands.intake.setIntakePower;
 import frc.robot.commands.intake.setWristPower;
 import frc.robot.commands.intake.intakeGround;
+import frc.robot.commands.setLEDAlliance;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -35,7 +38,6 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Feeder feeder = new Feeder();
   private final LEDs blinkin = new LEDs();
-  
 
   private final OI oi = OI.getInstance();
 
@@ -47,7 +49,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    drive.setDefaultCommand(getAutonomousCommand());
+    drive.setDefaultCommand(new swerveDrive(drive));
+    blinkin.setDefaultCommand(new setLEDAlliance(blinkin));
     wrist.setDefaultCommand(new setWristPower(wrist));
     intake.setDefaultCommand(new setIntakePower(intake, blinkin));
     feeder.setDefaultCommand(new setFeederPower(feeder));
