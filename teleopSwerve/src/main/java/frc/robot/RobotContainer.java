@@ -30,10 +30,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final SwerveSubsystem drive = new SwerveSubsystem();
   private final Wrist wrist = new Wrist();
   private final Intake intake = new Intake();
   private final Feeder feeder = new Feeder();
   private final LEDs blinkin = new LEDs();
+  
 
   private final OI oi = OI.getInstance();
 
@@ -41,10 +43,11 @@ public class RobotContainer {
   private final CommandXboxController operatorController =
       new CommandXboxController(OperatorConstants.OPERATOR_PORT);
 
-  SwerveSubsystem drive = new SwerveSubsystem(operatorController);
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    drive.setDefaultCommand(getAutonomousCommand());
     wrist.setDefaultCommand(new setWristPower(wrist));
     intake.setDefaultCommand(new setIntakePower(intake, blinkin));
     feeder.setDefaultCommand(new setFeederPower(feeder));

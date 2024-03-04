@@ -23,6 +23,36 @@ public final class Constants {
     public static final int OPERATOR_PORT = 3;
   }
 
+  public static class SwerveConstants {
+    public static final int[] MOTOR_IDS = {10, 11, 1, 20, 21, 2, 30, 31, 3, 40, 41, 4};
+    
+    public static final double CHASSIS_LENGTH = Units.inchesToMeters(23);
+    public static final double CHASSIS_WIDTH = Units.inchesToMeters(23);
+    public static final double[] MODULE_TRANSLATIONS = {
+      CHASSIS_WIDTH / 2, CHASSIS_LENGTH / 2, 
+      CHASSIS_WIDTH / 2, -CHASSIS_LENGTH / 2,
+      -CHASSIS_WIDTH / 2, CHASSIS_LENGTH / 2,
+      -CHASSIS_WIDTH / 2, -CHASSIS_LENGTH / 2,
+    };
+
+    public static final double WHEEL_DIAMETER_IN = 4;
+    public static final double WHEEL_CIRCUMFERENCE_IN = WHEEL_DIAMETER_IN*Math.PI;
+    public static final double DRIVE_GEAR_RATIO = 8.14;
+    public static final double INCHES_PER_METER = 39.3701;
+    // convert native units of rpm to meters per second
+    public static final double VELOCITY_CONVERSION_FACTOR = WHEEL_CIRCUMFERENCE_IN / DRIVE_GEAR_RATIO / INCHES_PER_METER / 60;
+
+    public static final double VOLTAGE_COMPENSATION = 10;
+    public static final int CURRENT_LIMIT = 30;
+    public static final double RAMP_RATE = 0.05;
+
+    public static final double[] DRIVE_PID_VALUES = {0.3, 0.0, 0.0};
+    public static final double[] TURN_PID_VALUES = {0.3, 0.0, 0.0};
+
+    public static final double MAX_SPEED = 12;
+
+  }
+
   public static class IntakeConstants {
     
     public static final int TOP_WHEEL_ID = 2;
