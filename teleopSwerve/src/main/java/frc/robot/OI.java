@@ -139,10 +139,6 @@ public class OI {
         return operatorLeftTrigger();
     }
 
-    // public double getFeederPower() {
-    //     return operatorRightTrigger() * IntakeConstants.FEEDER_MAX_POWER;
-    // }
-
 
     /**
      * Sets rumble value of controller to specified intensity

@@ -17,7 +17,7 @@ public class Feeder extends SubsystemBase {
     }
 
     public void setPower(double power) {
-        intakeWheels.set(power);
+        intakeWheels.set(power*IntakeConstants.FEEDER_INTAKE_MULTIPLIER);
         frontWheels.set(power);
         backWheels.set(power);
     }

@@ -70,10 +70,8 @@ public final class Constants {
     public static final double RAMP_RATE = 0.05;
 
     public static final double INTAKE_POWER = 0.5;
-    public static final double FEEDER_POWER = 0.8;
-    public static final double FEEDER_IDLE_POWER = 0.3;
-
-  
+    public static final double FEEDER_POWER = 0.5;
+    public static final double FEEDER_INTAKE_MULTIPLIER = 1.5;
     
   }
 
@@ -96,6 +94,20 @@ public final class Constants {
     public static final double MIN_POS = 0;
     // range of positions
     public static final double RANGE = MAX_POS-MIN_POS;
+
+  }
+
+  public static class ClimberConstants {
+    public static final int CLIMBER_L_ID = 1;
+    public static final int CLIMBER_R_ID = 1;
+
+    public static final double VOLTAGE_COMPENSATION = 10;
+    public static final int CURRENT_LIMIT = 50;
+    public static final IdleMode IDLE_MODE = IdleMode.kBrake;
+    public static final double RAMP_RATE = 0.05;
+
+    public static final double MAX_POWER = 0.7;
+    public static final double CONVERSION_FACTOR = 1.0;
 
   }
 
