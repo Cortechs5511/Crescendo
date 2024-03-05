@@ -55,10 +55,13 @@ public final class Constants {
 
   public static class IntakeConstants {
     
-    public static final int TOP_WHEEL_ID = 2;
-    public static final int BOTTOM_WHEEL_ID = 1;
+    public static final int TOP_WHEELS_ID = 2;
+    public static final int BOTTOM_WHEELS_ID = 1;
     
-    public static final int FEEDER_ID = 5;
+    
+    public static final int FEEDER_WRIST_ID = 5;
+    public static final int FEEDER_FRONT_ID = 5;
+    public static final int FEEDER_BACK_ID = 5;
 
     
     public static final int INTAKE_CURRENT_LIMIT = 50;
@@ -68,6 +71,7 @@ public final class Constants {
 
     public static final double INTAKE_POWER = 0.5;
     public static final double FEEDER_POWER = 0.8;
+    public static final double FEEDER_IDLE_POWER = 0.3;
 
   
     
@@ -100,6 +104,8 @@ public final class Constants {
 
     public static final double RED_ALLIANCE = -0.93;
     public static final double BLUE_ALLIANCE = -0.95;
+
+    public static final double INTAKE = -0.95;
     
   }
 

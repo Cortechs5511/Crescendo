@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
-    private final CANSparkMax topWheels = createIntakeController(IntakeConstants.TOP_WHEEL_ID, false);
-    private final CANSparkMax bottomWheels = createIntakeController(IntakeConstants.TOP_WHEEL_ID, true);
+    
+    private final CANSparkMax topWheels = createIntakeController(IntakeConstants.TOP_WHEELS_ID, false);
+    private final CANSparkMax bottomWheels = createIntakeController(IntakeConstants.TOP_WHEELS_ID, true);
 
     public Intake() {
 
@@ -18,6 +19,7 @@ public class Intake extends SubsystemBase {
     public void setPower(double power) {
         topWheels.set(power);
         bottomWheels.set(power);
+
     }
 
     private CANSparkMax createIntakeController(int port, boolean isInverted) {

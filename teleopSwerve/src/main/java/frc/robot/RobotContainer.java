@@ -52,8 +52,8 @@ public class RobotContainer {
     drive.setDefaultCommand(new swerveDrive(drive));
     blinkin.setDefaultCommand(new setLEDAlliance(blinkin));
     wrist.setDefaultCommand(new setWristPower(wrist));
-    intake.setDefaultCommand(new setIntakePower(intake, blinkin));
-    feeder.setDefaultCommand(new setFeederPower(feeder));
+    intake.setDefaultCommand(new setIntakePower(intake, feeder, blinkin));
+    // feeder.setDefaultCommand(new setFeederPower(feeder));
     configureBindings();
   }
 
@@ -75,6 +75,7 @@ public class RobotContainer {
     // cancelling on release.
     operatorController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     operatorController.leftBumper().whileTrue(new intakeGround(intake, wrist, feeder, blinkin));
+    operatorController.rightBumper().whileTrue(new setFeederPower(feeder));
   }
 
   /**

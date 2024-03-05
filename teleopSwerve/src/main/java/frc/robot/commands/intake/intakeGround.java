@@ -2,6 +2,7 @@ package frc.robot.commands.intake;
 
 import frc.robot.OI;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Feeder;
@@ -17,7 +18,6 @@ public class intakeGround extends Command {
     private final Wrist wrist;
     private final LEDs blinkin;
     private final OI oi = OI.getInstance();
-
     
 
     public intakeGround(Intake intakeSubsystem, Wrist wristSubsystem, Feeder feederSubsystem, LEDs ledSubsystem ) {
@@ -38,7 +38,7 @@ public class intakeGround extends Command {
 
     @Override
     public void execute() {
-        blinkin.setLEDs(0.97);
+        blinkin.setLEDs(LEDConstants.INTAKE);
         intake.setPower(IntakeConstants.INTAKE_POWER);
         feeder.setPower(IntakeConstants.FEEDER_POWER);
         wrist.setPosition(0);

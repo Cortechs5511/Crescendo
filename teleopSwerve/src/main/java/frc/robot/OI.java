@@ -136,7 +136,7 @@ public class OI {
     }
 
     public double getIntakePower() {
-        return operatorLeftTrigger() * IntakeConstants.INTAKE_POWER;
+        return operatorLeftTrigger();
     }
 
     // public double getFeederPower() {

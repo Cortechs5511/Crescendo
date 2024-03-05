@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class setFeederPower extends Command {
     private final Feeder feeder;
-    private final OI oi = OI.getInstance();
 
     public setFeederPower(Feeder subsystem) {
         feeder = subsystem;
@@ -22,8 +21,7 @@ public class setFeederPower extends Command {
 
     @Override
     public void execute() {
-        feeder.setPower(oi.getIntakePower()*IntakeConstants.FEEDER_POWER/IntakeConstants.INTAKE_POWER);
+        feeder.setPower(-1 * IntakeConstants.FEEDER_POWER);
 
-        SmartDashboard.putNumber("OI/Feeder Power", oi.getIntakePower()*IntakeConstants.FEEDER_POWER/IntakeConstants.INTAKE_POWER);
     }
 }
