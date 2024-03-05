@@ -29,10 +29,10 @@ public final class Constants {
     public static final double CHASSIS_LENGTH = Units.inchesToMeters(23);
     public static final double CHASSIS_WIDTH = Units.inchesToMeters(23);
     public static final double[] MODULE_TRANSLATIONS = {
-      CHASSIS_WIDTH / 2, CHASSIS_LENGTH / 2, 
-      CHASSIS_WIDTH / 2, -CHASSIS_LENGTH / 2,
-      -CHASSIS_WIDTH / 2, CHASSIS_LENGTH / 2,
-      -CHASSIS_WIDTH / 2, -CHASSIS_LENGTH / 2,
+      CHASSIS_LENGTH / 2, CHASSIS_WIDTH / 2, 
+      CHASSIS_LENGTH / 2, -CHASSIS_WIDTH / 2,
+      -CHASSIS_LENGTH / 2, CHASSIS_WIDTH / 2,
+      -CHASSIS_LENGTH / 2, -CHASSIS_WIDTH / 2,
     };
 
     public static final double WHEEL_DIAMETER_IN = 4;
@@ -73,6 +73,7 @@ public final class Constants {
     public static final double FEEDER_POWER = 0.5;
     public static final double FEEDER_INTAKE_MULTIPLIER = 1.5;
     
+    public static final double SHOOTER_POWER = -0.8;
   }
 
   public static class WristConstants {
@@ -118,6 +119,8 @@ public final class Constants {
     public static final double BLUE_ALLIANCE = -0.95;
 
     public static final double INTAKE = -0.95;
+
+    public static final double SHOOTER = -0.95;
     
   }
 

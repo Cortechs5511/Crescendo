@@ -1,8 +1,7 @@
-package frc.robot.commands.intake;
+package frc.robot.commands.shooter;
 
 import frc.robot.OI;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.LEDs;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,18 +9,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LEDConstants;
 
-public class setIntakePower extends Command {
+public class setShooterPower extends Command {
     private final Intake intake;
-    private final Feeder feeder;
     private final LEDs blinkin;
     private final OI oi = OI.getInstance();
 
-    public setIntakePower(Intake intakeSubsystem, Feeder feederSubsystem, LEDs ledSubsystem) {
+    public setShooterPower(Intake intakeSubsystem, LEDs ledSubsystem) {
         intake = intakeSubsystem;
-        feeder = feederSubsystem;
         blinkin = ledSubsystem;
         addRequirements(intakeSubsystem);
-        addRequirements(feederSubsystem);
         addRequirements(ledSubsystem);
     }
 
@@ -31,10 +27,9 @@ public class setIntakePower extends Command {
 
     @Override
     public void execute() {
-        intake.setPower(oi.getIntakePower() * IntakeConstants.INTAKE_POWER);
-        feeder.setPower(oi.getIntakePower() * IntakeConstants.FEEDER_POWER);
-        blinkin.setLEDs(LEDConstants.INTAKE);
+        intake.setPower(oi.getShooterPower() * IntakeConstants.SHOOTER_POWER);
+        blinkin.setLEDs(LEDConstants.SHOOTER);
 
-        SmartDashboard.putNumber("OI/Intake Power", oi.getIntakePower()*IntakeConstants.INTAKE_POWER);
+        SmartDashboard.putNumber("OI/Shooter Power", oi.getShooterPower()*IntakeConstants.SHOOTER_POWER);
     }
 }

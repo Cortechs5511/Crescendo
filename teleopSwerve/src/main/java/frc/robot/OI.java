@@ -139,6 +139,10 @@ public class OI {
         return operatorLeftTrigger();
     }
 
+    public double getShooterPower() {
+        return operatorRightTrigger();
+    }
+
 
     /**
      * Sets rumble value of controller to specified intensity
