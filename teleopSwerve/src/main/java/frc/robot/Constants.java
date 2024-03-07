@@ -46,8 +46,8 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 40;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double[] DRIVE_PID_VALUES = {0.3, 0.0, 0.0};
-    public static final double[] TURN_PID_VALUES = {0.3, 0.0, 0.0};
+    public static final double[] DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
+    public static final double[] TURN_PID_VALUES = {0.05, 0.0, 0.0};
 
     public static final double MAX_SPEED = 8;
 
@@ -93,7 +93,10 @@ public final class Constants {
     // position of intake when down (intaking)
     public static final double MIN_POS = 0;
     // range of positions
-    public static final double RANGE = MAX_POS-MIN_POS;
+    public static final double RANGE = 1 / 0.3975;
+    public static final double OFFSET = 1-0.878;
+    // min 0.2755
+    // max 0.878
 
   }
 

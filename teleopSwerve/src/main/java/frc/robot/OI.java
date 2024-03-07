@@ -11,7 +11,7 @@ public class OI {
     private static OI oi;
 
     public final XboxController driverController = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT);
-    public final XboxController operatorController = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT);
+    public final XboxController operatorController = new XboxController(OIConstants.OPERATOR_CONTROLLER_PORT);
 
     private OI() {
     }
@@ -50,7 +50,7 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return value;
+        return -value;
     }
 
     public double getOperatorLeftX() {

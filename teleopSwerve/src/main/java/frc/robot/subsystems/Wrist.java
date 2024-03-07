@@ -24,7 +24,8 @@ public class Wrist extends SubsystemBase {
     private final PIDController wristPIDController = new PIDController(0.03, 0, 0);
 
 
-    private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(WristConstants.THROUGH_BORE_ID);
+    private final DutyCycleEncoder absoluteEncoder = createDutyCycleEncoder(WristConstants.THROUGH_BORE_ID);
+
 
     public Wrist() {
         zero();
@@ -38,6 +39,9 @@ public class Wrist extends SubsystemBase {
 
     
     public double getRawPosition() {
+        double currentPosition = absoluteEncoder.getAbsolutePosition();
+        
+        
         return absoluteEncoder.getAbsolutePosition();
     }
 
@@ -87,6 +91,13 @@ public class Wrist extends SubsystemBase {
         RelativeEncoder encoder = controller.getEncoder();
         encoder.setPositionConversionFactor(WristConstants.POSITION_CONVERSION_FACTOR);
 
+        return encoder;
+    }
+
+    private DutyCycleEncoder createDutyCycleEncoder(int channel) {
+        DutyCycleEncoder encoder = new DutyCycleEncoder(channel);
+        encoder.setDutyCycleRange(0, WristConstants.RANGE);
+        encoder.setPositionOffset(WristConstants.OFFSET);
         return encoder;
     }
     
