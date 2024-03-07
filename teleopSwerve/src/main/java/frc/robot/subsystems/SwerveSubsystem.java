@@ -65,9 +65,9 @@ public class SwerveSubsystem extends SubsystemBase{
         field.setRobotPose(getPose());
 
         ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
-            SwerveConstants.MAX_SPEED * y, 
-            SwerveConstants.MAX_SPEED * x,
-            SwerveConstants.MAX_SPEED * theta
+            SwerveConstants.MAX_TRANSLATIONAL_SPEED * y, 
+            SwerveConstants.MAX_TRANSLATIONAL_SPEED * x,
+            SwerveConstants.MAX_ROTATIONAL_SPEED * theta
         );
 
         if (fieldRelative) {
@@ -119,7 +119,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void setStates(SwerveModuleState[] targetStates) {
         // add constant for max speed
-        SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, SwerveConstants.MAX_SPEED);
+        SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, SwerveConstants.MAX_TRANSLATIONAL_SPEED);
 
         for (int i = 0; i < modules.length; i++) {
             modules[i].setTargetState(targetStates[i]);
@@ -172,9 +172,9 @@ public class SwerveSubsystem extends SubsystemBase{
             
             drivePIDController = new PIDController(SwerveConstants.DRIVE_PID_VALUES[0], SwerveConstants.DRIVE_PID_VALUES[1], SwerveConstants.DRIVE_PID_VALUES[2]);
             turnPIDController = new PIDController(SwerveConstants.TURN_PID_VALUES[0], SwerveConstants.TURN_PID_VALUES[1], SwerveConstants.TURN_PID_VALUES[2]);
-            turnPIDController.enableContinuousInput(-Math.PI/2, Math.PI/2);
+            turnPIDController.enableContinuousInput(-Math.PI / 2, Math.PI / 2);
             
-            currentState = new SwerveModuleState();
+            currentState = new SwerveModuleState(getVelocity(), getAngle());
             currentPosition = new SwerveModulePosition();
         }
 
@@ -231,7 +231,7 @@ public class SwerveSubsystem extends SubsystemBase{
         }
 
         public void setTargetState(SwerveModuleState targetState) {
-            currentState = SwerveModuleState.optimize(targetState, currentState.angle);
+            currentState = SwerveModuleState.optimize(targetState, getAngle());
             currentPosition = new SwerveModulePosition(currentPosition.distanceMeters + (currentState.speedMetersPerSecond * 0.02), currentState.angle);
 
             final double driveOutput = drivePIDController.calculate(driveEncoder.getVelocity(), currentState.speedMetersPerSecond);

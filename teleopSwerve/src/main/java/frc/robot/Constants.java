@@ -46,10 +46,11 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 40;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double[] DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
+    public static final double[] DRIVE_PID_VALUES = {0.1, 0.0, 0.0};
     public static final double[] TURN_PID_VALUES = {0.05, 0.0, 0.0};
 
-    public static final double MAX_SPEED = 8;
+    public static final double MAX_TRANSLATIONAL_SPEED = 8;
+    public static final double MAX_ROTATIONAL_SPEED = 6;
 
     public static final double MAX_AUTON_SPEED = 4.5;
     public static final double DRIVE_BASE_RADIUS = Units.inchesToMeters(Math.sqrt(CHASSIS_LENGTH*CHASSIS_LENGTH+CHASSIS_WIDTH*CHASSIS_WIDTH));
