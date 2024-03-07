@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -27,11 +28,10 @@ public class SwerveSubsystem extends SubsystemBase{
     
     private SwerveModule[] modules;
     private SwerveDriveKinematics kinematics;
+    private Gyro gyro;
     private SwerveDriveOdometry odometry;
 
-    private Gyro gyro;
-
-    private Field2d field = new Field2d();
+    private Field2d field;
 
     public SwerveSubsystem() {
         gyro = new Gyro();
@@ -47,22 +47,16 @@ public class SwerveSubsystem extends SubsystemBase{
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[4], SwerveConstants.MODULE_TRANSLATIONS[5]),
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[6], SwerveConstants.MODULE_TRANSLATIONS[7])
         );
+
+        odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
+        field = new Field2d();
     }
 
     @Override
     public void periodic() {
-        double[] loggingState = {
-            modules[0].getAngle().getRadians(),
-            modules[0].getVelocity(),
-            modules[1].getAngle().getRadians(),
-            modules[1].getVelocity(),
-            modules[2].getAngle().getRadians(),
-            modules[2].getVelocity(),
-            modules[3].getAngle().getRadians(),
-            modules[3].getVelocity(),
-        };
-        
-        SmartDashboard.putNumberArray("Module State", loggingState);
+        odometry.update(gyro.getRotation2d(), getPositions());
+        field.setRobotPose(getPose());
+        logState();
     }
 
     public void drive(double y, double x, double theta, boolean fieldRelative) {
@@ -83,6 +77,21 @@ public class SwerveSubsystem extends SubsystemBase{
             driveRobotRelative(newDesiredSpeeds);
         }
         
+    }
+
+    public void logState() {
+        double[] loggingState = {
+            modules[0].getAngle().getRadians(),
+            modules[0].getVelocity(),
+            modules[1].getAngle().getRadians(),
+            modules[1].getVelocity(),
+            modules[2].getAngle().getRadians(),
+            modules[2].getVelocity(),
+            modules[3].getAngle().getRadians(),
+            modules[3].getVelocity(),
+        };
+        
+        SmartDashboard.putNumberArray("Module State", loggingState);
     }
 
     public Pose2d getPose() {
@@ -132,6 +141,10 @@ public class SwerveSubsystem extends SubsystemBase{
         }
 
         return positions;
+    }
+
+    public ChassisSpeeds getRobotRelativeSpeeds() {
+        return kinematics.toChassisSpeeds(getModuleStates());
     }
     
     // Swerve Module Class

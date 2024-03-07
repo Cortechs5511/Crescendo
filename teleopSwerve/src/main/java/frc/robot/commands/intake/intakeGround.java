@@ -40,7 +40,7 @@ public class intakeGround extends Command {
     public void execute() {
         blinkin.setLEDs(LEDConstants.INTAKE);
         intake.setPower(IntakeConstants.INTAKE_POWER);
-        feeder.setPower(IntakeConstants.FEEDER_POWER);
+        feeder.setPower(IntakeConstants.FEEDER_INTAKE_POWER);
         wrist.setPosition(0);
 
         // in theory doesn't need a stop, will just turn on only when trigger is pressed

@@ -4,14 +4,16 @@
 
 package frc.robot;
 
+import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.setLEDAlliance;
 import frc.robot.commands.swerveDrive;
-import frc.robot.commands.intake.setFeederPower;
+import frc.robot.commands.shooter.setFeederPower;
 import frc.robot.commands.intake.setIntakePower;
 import frc.robot.commands.intake.setWristPower;
+import frc.robot.commands.intake.feederIntake;
 import frc.robot.commands.intake.intakeGround;
 import frc.robot.commands.setLEDAlliance;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -43,7 +45,7 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController operatorController =
-      new CommandXboxController(OperatorConstants.OPERATOR_PORT);
+      new CommandXboxController(OIConstants.OPERATOR_CONTROLLER_PORT);
 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -52,7 +54,7 @@ public class RobotContainer {
     drive.setDefaultCommand(new swerveDrive(drive));
     blinkin.setDefaultCommand(new setLEDAlliance(blinkin));
     wrist.setDefaultCommand(new setWristPower(wrist));
-    intake.setDefaultCommand(new setIntakePower(intake, feeder, blinkin));
+    intake.setDefaultCommand(new setIntakePower(intake, feeder));
     // feeder.setDefaultCommand(new setFeederPower(feeder));
     configureBindings();
   }
@@ -74,7 +76,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     operatorController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    operatorController.leftBumper().whileTrue(new intakeGround(intake, wrist, feeder, blinkin));
+    operatorController.leftBumper().whileTrue(new feederIntake(feeder));
     operatorController.rightBumper().whileTrue(new setFeederPower(feeder));
   }
 

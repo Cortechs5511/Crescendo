@@ -34,7 +34,7 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return value;
+        return -value;
     }
 
     public double getOperatorLeftY() {
@@ -42,7 +42,7 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return value;
+        return -value;
     }
 
     public double getDriverLeftX() {
@@ -66,7 +66,7 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return value;
+        return -value;
     }
 
     public double getOperatorRightY() {
@@ -74,7 +74,7 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return value;
+        return -value;
     }
 
     public double getDriverRightX() {

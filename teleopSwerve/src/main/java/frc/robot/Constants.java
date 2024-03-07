@@ -43,46 +43,45 @@ public final class Constants {
     public static final double VELOCITY_CONVERSION_FACTOR = WHEEL_CIRCUMFERENCE_IN / DRIVE_GEAR_RATIO / INCHES_PER_METER / 60;
 
     public static final double VOLTAGE_COMPENSATION = 10;
-    public static final int CURRENT_LIMIT = 30;
+    public static final int CURRENT_LIMIT = 40;
     public static final double RAMP_RATE = 0.05;
 
     public static final double[] DRIVE_PID_VALUES = {0.3, 0.0, 0.0};
     public static final double[] TURN_PID_VALUES = {0.3, 0.0, 0.0};
 
-    public static final double MAX_SPEED = 12;
+    public static final double MAX_SPEED = 8;
+
+    public static final double MAX_AUTON_SPEED = 4.5;
+    public static final double DRIVE_BASE_RADIUS = Units.inchesToMeters(Math.sqrt(CHASSIS_LENGTH*CHASSIS_LENGTH+CHASSIS_WIDTH*CHASSIS_WIDTH));
 
   }
 
   public static class IntakeConstants {
     
-    public static final int TOP_WHEELS_ID = 2;
-    public static final int BOTTOM_WHEELS_ID = 1;
-    
-    
-    public static final int FEEDER_WRIST_ID = 5;
-    public static final int FEEDER_FRONT_ID = 5;
-    public static final int FEEDER_BACK_ID = 5;
-
-    
-    public static final int INTAKE_CURRENT_LIMIT = 50;
+    public static final int TOP_WHEELS_ID = 51;
+    public static final int BOTTOM_WHEELS_ID = 50;  
+    public static final int FEEDER_ID = 52;
+  
+    public static final int INTAKE_CURRENT_LIMIT = 40;
     public static final double VOLTAGE_COMPENSATION = 10;
     public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kCoast;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double INTAKE_POWER = 0.5;
-    public static final double FEEDER_POWER = 0.5;
-    public static final double FEEDER_INTAKE_MULTIPLIER = 1.5;
+    public static final double INTAKE_POWER = 0.4;
+    public static final double FEEDER_INTAKE_POWER = 0.2;
+    
     
     public static final double SHOOTER_POWER = -0.8;
+    public static final double FEEDER_SHOOTER_POWER = -0.5;
   }
 
   public static class WristConstants {
-    public static final int WRIST_L_ID = 3;
-    public static final int WRIST_R_ID = 4;
+    public static final int WRIST_L_ID = 60;
+    public static final int WRIST_R_ID = 61;
     public static final int THROUGH_BORE_ID = 9;
 
     public static final double VOLTAGE_COMPENSATION = 10;
-    public static final int CURRENT_LIMIT = 50;
+    public static final int CURRENT_LIMIT = 40;
     public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;
     public static final double MAX_POWER = 0.5;
@@ -103,7 +102,7 @@ public final class Constants {
     public static final int CLIMBER_R_ID = 1;
 
     public static final double VOLTAGE_COMPENSATION = 10;
-    public static final int CURRENT_LIMIT = 50;
+    public static final int CURRENT_LIMIT = 40;
     public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;
 
@@ -127,7 +126,7 @@ public final class Constants {
   public static class OIConstants {
     
     public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final int OPERATOR_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     public static final double DEADBAND = 0.05;
 

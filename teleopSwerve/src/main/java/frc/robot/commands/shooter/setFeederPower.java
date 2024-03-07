@@ -1,4 +1,4 @@
-package frc.robot.commands.intake;
+package frc.robot.commands.shooter;
 
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.OI;
@@ -21,7 +21,7 @@ public class setFeederPower extends Command {
 
     @Override
     public void execute() {
-        feeder.setPower(-1 * IntakeConstants.FEEDER_POWER);
+        feeder.setPower(IntakeConstants.FEEDER_SHOOTER_POWER);
 
     }
 }
