@@ -227,7 +227,7 @@ public class SwerveSubsystem extends SubsystemBase{
         }
 
         public Rotation2d getAngle() {
-            return new Rotation2d(getAbsoluteEncoderPos());
+            return Rotation2d.fromRotations(getAbsoluteEncoderPos());
         }
 
         public void setTargetState(SwerveModuleState targetState) {

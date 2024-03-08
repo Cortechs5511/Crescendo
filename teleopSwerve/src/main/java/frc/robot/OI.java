@@ -82,7 +82,7 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND+0.1) {
             return 0;
         }
-        return -value;
+        return value;
     }
 
     public double getOperatorRightX() {
