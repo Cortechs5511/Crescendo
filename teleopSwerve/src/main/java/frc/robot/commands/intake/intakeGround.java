@@ -39,7 +39,7 @@ public class intakeGround extends Command {
     @Override
     public void execute() {
         blinkin.setLEDs(LEDConstants.INTAKE);
-        intake.setPower(IntakeConstants.INTAKE_POWER);
+        intake.setPower(IntakeConstants.INTAKE_POWER, 1, 1);
         feeder.setPower(IntakeConstants.FEEDER_INTAKE_POWER);
         wrist.setPosition(0);
 

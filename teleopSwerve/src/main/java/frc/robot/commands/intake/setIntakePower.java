@@ -32,8 +32,7 @@ public class setIntakePower extends Command {
 
     @Override
     public void execute() {
-        intake.setPower(oi.getIntakePower() * IntakeConstants.INTAKE_POWER);
-        feeder.setPower(oi.getIntakePower() * IntakeConstants.FEEDER_INTAKE_POWER);
+        intake.setPower(oi.getIntakePower() * IntakeConstants.INTAKE_POWER, 1, 1);
         leds.setLEDs(LEDConstants.INTAKE);
 
         SmartDashboard.putNumber("OI/Intake Power", oi.getIntakePower()*IntakeConstants.INTAKE_POWER);

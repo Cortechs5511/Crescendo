@@ -10,15 +10,15 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase {
     
     private final CANSparkMax topWheels = createIntakeController(IntakeConstants.TOP_WHEELS_ID, false);
-    private final CANSparkMax bottomWheels = createIntakeController(IntakeConstants.BOTTOM_WHEELS_ID, true);
+    private final CANSparkMax bottomWheels = createIntakeController(IntakeConstants.BOTTOM_WHEELS_ID, false);
 
     public Intake() {
 
     }
     
-    public void setPower(double power) {
-        topWheels.set(power);
-        bottomWheels.set(power);
+    public void setPower(double power, double topMultiplier, double bottomMultiplier) {
+        topWheels.set(power * topMultiplier);
+        bottomWheels.set(power * bottomMultiplier);
 
     }
 

@@ -1,4 +1,4 @@
-package frc.robot.commands.shooter;
+package frc.robot.commands;
 
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.OI;
@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class setFeederPower extends Command {
+public class zeroFeederPower extends Command {
     private final Feeder feeder;
     private final OI oi = OI.getInstance();
 
-    public setFeederPower(Feeder subsystem) {
+    public zeroFeederPower(Feeder subsystem) {
         feeder = subsystem;
         addRequirements(subsystem);
     }
@@ -22,7 +22,7 @@ public class setFeederPower extends Command {
 
     @Override
     public void execute() {
-        feeder.setPower(oi.getFeederPower());
+        feeder.setPower(0);
         
     }
 

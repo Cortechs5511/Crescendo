@@ -39,10 +39,7 @@ public class Wrist extends SubsystemBase {
 
     
     public double getRawPosition() {
-        double currentPosition = absoluteEncoder.getAbsolutePosition();
-        
-        
-        return absoluteEncoder.getAbsolutePosition();
+        return absoluteEncoder.getAbsolutePosition()+0.5;
     }
 
     // convert from absolute encoder value to percent position
@@ -56,12 +53,19 @@ public class Wrist extends SubsystemBase {
     }
 
     // set position of wrist given position range from 0.0-1.0 to encoder range
-    public void setPosition(double percentPosition) {
+    // public void setPosition(double percentPosition) {
+    //     // convert given position from 0.0-1.0 to through bore encoder range
+    //     double translatedPosition = percentPosition * WristConstants.RANGE + WristConstants.MIN_POS;
+    //     final double wristOutput = wristPIDController.calculate(getRawPosition(), translatedPosition);
+    //     wristLeft.set(wristOutput);
+    //     wristRight.set(wristOutput);
+    // }
+
+    public void setPosition(double position) {
         // convert given position from 0.0-1.0 to through bore encoder range
-        double translatedPosition = percentPosition * WristConstants.RANGE + WristConstants.MIN_POS;
-        final double wristOutput = wristPIDController.calculate(getRawPosition(), translatedPosition);
-        wristLeft.set(wristOutput);
-        wristRight.set(wristOutput);
+        final double wristOutput = wristPIDController.calculate(getRawPosition(), position);
+        wristLeft.set(-wristOutput);
+        wristRight.set(-wristOutput);
     }
 
     public double getLeftRelativePosition() {

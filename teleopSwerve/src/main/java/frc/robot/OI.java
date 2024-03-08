@@ -70,7 +70,7 @@ public class OI {
     }
 
     public double getOperatorRightY() {
-        double value = operatorController.getRightY();
+        double value = operatorController.getRawAxis(5);
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
@@ -125,9 +125,17 @@ public class OI {
         return value;
     }
 
+    public boolean operatorLeftBumper() {
+        return operatorController.getLeftBumper();
+    }
+
+    public boolean operatorRightBumper() {
+        return operatorController.getLeftBumper();
+    }
+
     
     public double getWristPower() {
-        return getOperatorLeftY();
+        return getOperatorRightY();
     }
 
     public double getWristPosition() {
@@ -141,6 +149,10 @@ public class OI {
 
     public double getShooterPower() {
         return operatorRightTrigger();
+    }
+
+    public double getFeederPower() {
+        return getOperatorLeftY();
     }
 
 
