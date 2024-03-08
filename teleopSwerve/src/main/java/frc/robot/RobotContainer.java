@@ -8,12 +8,12 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.setFeederPower;
 import frc.robot.commands.setLEDAlliance;
 import frc.robot.commands.swerveDrive;
-import frc.robot.commands.shooter.setFeederPower;
 import frc.robot.commands.intake.setIntakePower;
 import frc.robot.commands.intake.setWristPower;
-import frc.robot.commands.intake.feederIntake;
+import frc.robot.commands.shooter.setShooterPower;
 import frc.robot.commands.intake.intakeGround;
 import frc.robot.commands.setLEDAlliance;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -54,7 +54,7 @@ public class RobotContainer {
     drive.setDefaultCommand(new swerveDrive(drive));
     blinkin.setDefaultCommand(new setLEDAlliance(blinkin));
     wrist.setDefaultCommand(new setWristPower(wrist));
-    intake.setDefaultCommand(new setIntakePower(intake, feeder, blinkin));
+    intake.setDefaultCommand(new setIntakePower(intake, blinkin));
     feeder.setDefaultCommand(new setFeederPower(feeder));
     configureBindings();
   }
@@ -76,8 +76,9 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     operatorController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    operatorController.leftBumper().whileTrue(new feederIntake(feeder));
-    operatorController.rightBumper().whileTrue(new setFeederPower(feeder));
+    operatorController.rightTrigger().whileTrue(new setShooterPower(intake, blinkin));
+    // operatorController.leftBumper().whileTrue(new feederIntake(feeder));
+    // operatorController.rightBumper().whileTrue(new setFeederPower(feeder));
   }
 
   /**

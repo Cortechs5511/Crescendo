@@ -22,7 +22,7 @@ public class setWristPosition extends Command {
 
     @Override
     public void execute() {
-        wrist.setPosition(oi.getWristPosition());
+        // wrist.setPosition(oi.getWristPosition());
     
         // SmartDashboard.putNumber("OI/Wrist Power", oi.getWristPower());
     }

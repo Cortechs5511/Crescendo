@@ -8,22 +8,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.IntakeConstants;
 
 public class Feeder extends SubsystemBase {
-    private final CANSparkMax feederWheels = createFeederController(IntakeConstants.FEEDER_ID, false);
-    
+    private final CANSparkMax feederMotor = createFeederController(52, false);
 
     public Feeder() {
 
     }
 
     public void setPower(double power) {
-        feederWheels.set(power);
-    }
-
-    public double getPower() {
-        return feederWheels.get();
+        feederMotor.set(power);
     }
     
-    private CANSparkMax createFeederController(int port, boolean isInverted) {
+    public CANSparkMax createFeederController(int port, boolean isInverted) {
         CANSparkMax controller = new CANSparkMax(port, MotorType.kBrushless);
         controller.restoreFactoryDefaults();
 
@@ -38,8 +33,4 @@ public class Feeder extends SubsystemBase {
         return controller;
     }
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Feeder Power", 0);
-    }
 }

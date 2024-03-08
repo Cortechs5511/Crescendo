@@ -46,7 +46,7 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 40;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double[] DRIVE_PID_VALUES = {0.1, 0.0, 0.0};
+    public static final double[] DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
     public static final double[] TURN_PID_VALUES = {0.05, 0.0, 0.0};
 
     public static final double MAX_TRANSLATIONAL_SPEED = 8;
@@ -73,7 +73,7 @@ public final class Constants {
     
     
     public static final double SHOOTER_POWER = -0.8;
-    public static final double FEEDER_SHOOTER_POWER = -0.5;
+    public static final double FEEDER_SHOOTER_POWER = 1;
   }
 
   public static class WristConstants {
@@ -85,7 +85,7 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 40;
     public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;
-    public static final double MAX_POWER = 0.5;
+    public static final double MAX_POWER = 0.2;
 
     // 50:1 ratio
     public static final double POSITION_CONVERSION_FACTOR = 50 * 22 / 12;

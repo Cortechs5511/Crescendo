@@ -130,10 +130,10 @@ public class OI {
         return getOperatorLeftY();
     }
 
-    public double getWristPosition() {
-        // convert joystick range to 0-1
-        return (getOperatorLeftY()+1)/2;
-    }
+    // public double getWristPosition() {
+    //     // convert joystick range to 0-1
+    //     return (getOperatorLeftY()+1)/2;
+    // }
 
     public double getIntakePower() {
         return operatorLeftTrigger();
@@ -141,6 +141,10 @@ public class OI {
 
     public double getShooterPower() {
         return operatorRightTrigger();
+    }
+
+    public double getFeederPower() {
+        return getOperatorRightY();
     }
 
 
