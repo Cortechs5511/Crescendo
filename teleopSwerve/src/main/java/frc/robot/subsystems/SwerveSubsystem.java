@@ -4,6 +4,8 @@ import frc.robot.Constants.SwerveConstants;
 
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -19,6 +21,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,6 +53,24 @@ public class SwerveSubsystem extends SubsystemBase{
 
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
         field = new Field2d();
+
+        AutoBuilder.configureHolonomic(
+            this::getPose, 
+            this::resetPose, 
+            this::getSpeeds, this::driveRobotRelative, 
+            SwerveConstants.pathFollowerConfig, 
+            () -> {
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            }, 
+            this);
+
+            // PathPlannerLogging.setLogActivePathCallback(poses); -> field.getObject("path").setPoses(poses);
+
+            SmartDashboard.putData("field", field);
     }
 
     @Override

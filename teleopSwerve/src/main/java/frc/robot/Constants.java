@@ -5,8 +5,12 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.hal.REVPHFaults;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
@@ -49,12 +53,20 @@ public final class Constants {
     public static final double[] DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
     public static final double[] TURN_PID_VALUES = {0.05, 0.0, 0.0};
 
-    public static final double MAX_TRANSLATIONAL_SPEED = 8;
-    public static final double MAX_ROTATIONAL_SPEED = 6;
+    public static final double MAX_TRANSLATIONAL_SPEED = 16;
+    public static final double MAX_ROTATIONAL_SPEED = 20;
 
     public static final double MAX_AUTON_SPEED = 4.5;
     public static final double DRIVE_BASE_RADIUS = Units.inchesToMeters(Math.sqrt(CHASSIS_LENGTH*CHASSIS_LENGTH+CHASSIS_WIDTH*CHASSIS_WIDTH));
 
+
+    public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+      new PIDConstants(0.05, 0.0, 0.0), 
+      new PIDConstants(0.05, 0.0, 0.0), 
+      MAX_AUTON_SPEED,
+      DRIVE_BASE_RADIUS,
+      new ReplanningConfig()
+      );
   }
 
   public static class IntakeConstants {
@@ -68,12 +80,12 @@ public final class Constants {
     public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kCoast;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double INTAKE_POWER = 0.4;
+    public static final double INTAKE_POWER = 0.3;
     public static final double FEEDER_INTAKE_POWER = 0.2;
     
     
-    public static final double SHOOTER_POWER = -0.8;
-    public static final double FEEDER_SHOOTER_POWER = 1;
+    public static final double SHOOTER_POWER = -0.3;
+    public static final double FEEDER_SHOOTER_POWER = -0.7;
   }
 
   public static class WristConstants {
@@ -85,7 +97,7 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 40;
     public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;
-    public static final double MAX_POWER = 0.2;
+    public static final double MAX_POWER = 0.25;
 
     // 50:1 ratio
     public static final double POSITION_CONVERSION_FACTOR = 50 * 22 / 12;

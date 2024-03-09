@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.OI;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Feeder;
 
 public class setFeederPower extends Command {
@@ -15,6 +16,6 @@ public class setFeederPower extends Command {
 
     @Override
     public void execute() {
-        feeder.setPower(oi.getFeederPower());
+        feeder.setPower(oi.getFeederPower()*IntakeConstants.FEEDER_SHOOTER_POWER);
     }
 }
