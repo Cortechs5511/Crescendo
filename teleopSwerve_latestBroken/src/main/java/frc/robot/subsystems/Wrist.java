@@ -11,9 +11,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.IntakeConstants;
+
 import frc.robot.Constants.WristConstants;
-import frc.robot.commands.intake.setWristPower;
 
 public class Wrist extends SubsystemBase {
     private final CANSparkMax wristLeft = createWristController(WristConstants.WRIST_L_ID, true);
@@ -37,6 +36,7 @@ public class Wrist extends SubsystemBase {
         leftRelativeEncoder.setPosition(0);
         rightRelativeEncoder.setPosition(0);
     }
+    
 
     public void setIntakePosition() {
         double motorOutput;

@@ -23,9 +23,6 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
-    public static final int OPERATOR_PORT = 3;
-  }
 
   public static class SwerveConstants {
     public static final int[] MOTOR_IDS = {10, 11, 1, 20, 21, 2, 30, 31, 3, 40, 41, 4};

@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.Constants.OIConstants;
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.setFeederPower;
@@ -65,7 +64,7 @@ public class RobotContainer {
     drive.setDefaultCommand(new swerveDrive(drive));
     blinkin.setDefaultCommand(new setLEDAlliance(blinkin));
     wrist.setDefaultCommand(new setWristPower(wrist));
-    intake.setDefaultCommand(new setIntakePower(intake, wrist, blinkin));
+    intake.setDefaultCommand(new setIntakePower(intake, blinkin));
     feeder.setDefaultCommand(new setFeederPower(feeder));
     configureBindings();
 
