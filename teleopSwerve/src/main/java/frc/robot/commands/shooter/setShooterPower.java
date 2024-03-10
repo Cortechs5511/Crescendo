@@ -27,7 +27,9 @@ public class setShooterPower extends Command {
 
     @Override
     public void execute() {
-        intake.setPower(oi.getShooterPower() * IntakeConstants.SHOOTER_POWER);
+        // intake.setPower(oi.getShooterPower() * IntakeConstants.SHOOTER_POWER);
+        intake.setTopWheels(oi.getShooterPower()*IntakeConstants.SHOOTER_POWER*1.05);
+        intake.setBottomWheels(oi.getShooterPower()*IntakeConstants.SHOOTER_POWER*1.05);
         blinkin.setLEDs(LEDConstants.SHOOTER);
 
         SmartDashboard.putNumber("OI/Shooter Power", oi.getShooterPower()*IntakeConstants.SHOOTER_POWER);

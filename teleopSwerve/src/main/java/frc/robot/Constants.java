@@ -53,8 +53,8 @@ public final class Constants {
     public static final double[] DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
     public static final double[] TURN_PID_VALUES = {0.05, 0.0, 0.0};
 
-    public static final double MAX_TRANSLATIONAL_SPEED = 16;
-    public static final double MAX_ROTATIONAL_SPEED = 20;
+    public static final double MAX_TRANSLATIONAL_SPEED = 16 * 1.25;
+    public static final double MAX_ROTATIONAL_SPEED = 20 * 1.25;
 
     public static final double MAX_AUTON_SPEED = 4.5;
     public static final double DRIVE_BASE_RADIUS = Units.inchesToMeters(Math.sqrt(CHASSIS_LENGTH*CHASSIS_LENGTH+CHASSIS_WIDTH*CHASSIS_WIDTH));
@@ -86,6 +86,8 @@ public final class Constants {
     
     public static final double SHOOTER_POWER = -0.3;
     public static final double FEEDER_SHOOTER_POWER = -0.7;
+
+    public static final double SPEAKER_POWER = -0.8;
   }
 
   public static class WristConstants {
@@ -144,7 +146,7 @@ public final class Constants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
-    public static final double DEADBAND = 0.05;
+    public static final double DEADBAND = 0.1;
 
   }
 
