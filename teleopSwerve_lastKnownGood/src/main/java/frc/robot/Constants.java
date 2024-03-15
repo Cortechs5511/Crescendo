@@ -28,7 +28,7 @@ public final class Constants {
   }
 
   public static class SwerveConstants {
-    public static final int[] MOTOR_IDS = {10, 11, 1, 20, 21, 2, 30, 31, 3, 40, 41, 4};
+    public static final int[] IDS = {10, 11, 1, 20, 21, 2, 30, 31, 3, 40, 41, 4};
     
     public static final double CHASSIS_LENGTH = Units.inchesToMeters(23);
     public static final double CHASSIS_WIDTH = Units.inchesToMeters(23);
@@ -50,8 +50,13 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 40;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double[] DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
-    public static final double[] TURN_PID_VALUES = {0.05, 0.0, 0.0};
+    public static final double[] FRONT_DRIVE_PID_VALUES = {0.04, 0.0, 0.0};
+    public static final double[] FRONT_TURN_PID_VALUES = {0.04, 0.0, 0.0};
+    
+    public static final double[] BACK_DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
+    public static final double[] BACK_TURN_PID_VALUES = {0.05, 0.0, 0.0};
+
+    public static final double PID_RANGE = 0.9;
 
     public static final double MAX_TRANSLATIONAL_SPEED = 30;
     public static final double MAX_ROTATIONAL_SPEED = 30;

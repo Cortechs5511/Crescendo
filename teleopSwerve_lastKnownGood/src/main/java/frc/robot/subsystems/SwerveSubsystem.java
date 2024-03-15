@@ -31,6 +31,7 @@ public class SwerveSubsystem extends SubsystemBase{
     
     private SwerveModule[] modules;
     private SwerveDriveKinematics kinematics;
+    private final PIDController[] PIDControllers;
     private Gyro gyro;
     private SwerveDriveOdometry odometry;
 
@@ -39,10 +40,10 @@ public class SwerveSubsystem extends SubsystemBase{
     public SwerveSubsystem() {
         gyro = new Gyro();
         modules = new SwerveModule[] {
-            new SwerveModule(SwerveConstants.MOTOR_IDS[0], SwerveConstants.MOTOR_IDS[1], SwerveConstants.MOTOR_IDS[2]),
-            new SwerveModule(SwerveConstants.MOTOR_IDS[3], SwerveConstants.MOTOR_IDS[4], SwerveConstants.MOTOR_IDS[5]),
-            new SwerveModule(SwerveConstants.MOTOR_IDS[6], SwerveConstants.MOTOR_IDS[7], SwerveConstants.MOTOR_IDS[8]),
-            new SwerveModule(SwerveConstants.MOTOR_IDS[9], SwerveConstants.MOTOR_IDS[10], SwerveConstants.MOTOR_IDS[11]),
+            new SwerveModule(SwerveConstants.IDS[0], SwerveConstants.IDS[1], SwerveConstants.IDS[2]),
+            new SwerveModule(SwerveConstants.IDS[3], SwerveConstants.IDS[4], SwerveConstants.IDS[5]),
+            new SwerveModule(SwerveConstants.IDS[6], SwerveConstants.IDS[7], SwerveConstants.IDS[8]),
+            new SwerveModule(SwerveConstants.IDS[9], SwerveConstants.IDS[10], SwerveConstants.IDS[11]),
         };
         kinematics = new SwerveDriveKinematics(
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[0], SwerveConstants.MODULE_TRANSLATIONS[1]), 
@@ -50,6 +51,14 @@ public class SwerveSubsystem extends SubsystemBase{
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[4], SwerveConstants.MODULE_TRANSLATIONS[5]),
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[6], SwerveConstants.MODULE_TRANSLATIONS[7])
         );
+        PIDControllers = new PIDController[] {
+            new PIDController(SwerveConstants.FRONT_DRIVE_PID_VALUES[0], SwerveConstants.FRONT_DRIVE_PID_VALUES[1], SwerveConstants.FRONT_DRIVE_PID_VALUES[2]),
+            new PIDController(SwerveConstants.FRONT_TURN_PID_VALUES[0], SwerveConstants.FRONT_TURN_PID_VALUES[1], SwerveConstants.FRONT_TURN_PID_VALUES[2]),
+            new PIDController(SwerveConstants.BACK_DRIVE_PID_VALUES[0], SwerveConstants.BACK_DRIVE_PID_VALUES[1], SwerveConstants.BACK_DRIVE_PID_VALUES[2]),
+            new PIDController(SwerveConstants.BACK_TURN_PID_VALUES[0], SwerveConstants.BACK_TURN_PID_VALUES[1], SwerveConstants.BACK_TURN_PID_VALUES[2])  
+        };
+        PIDControllers[1].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
+        PIDControllers[3].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
 
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
         field = new Field2d();
@@ -77,7 +86,7 @@ public class SwerveSubsystem extends SubsystemBase{
     public void periodic() {
         odometry.update(gyro.getRotation2d(), getPositions());
         field.setRobotPose(getPose());
-        logState();
+        logStates();
     }
 
     public void drive(double y, double x, double theta, boolean fieldRelative) {
@@ -100,7 +109,7 @@ public class SwerveSubsystem extends SubsystemBase{
         
     }
 
-    public void logState() {
+    public void logStates() {
         double[] loggingState = {
             modules[0].getAngle().getRadians(),
             modules[0].getVelocity(),
@@ -142,9 +151,11 @@ public class SwerveSubsystem extends SubsystemBase{
         // add constant for max speed
         SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, SwerveConstants.MAX_TRANSLATIONAL_SPEED);
 
-        for (int i = 0; i < modules.length; i++) {
-            modules[i].setTargetState(targetStates[i]);
-        }
+       modules[0].setTargetState(targetStates[0], PIDControllers[0], PIDControllers[1]);
+       modules[1].setTargetState(targetStates[1], PIDControllers[0], PIDControllers[1]);
+       modules[2].setTargetState(targetStates[2], PIDControllers[2], PIDControllers[3]);
+       modules[3].setTargetState(targetStates[3], PIDControllers[2], PIDControllers[3]);
+    
     }
 
     public SwerveModuleState[] getModuleStates() {
@@ -178,9 +189,6 @@ public class SwerveSubsystem extends SubsystemBase{
 
         private RelativeEncoder driveEncoder;
         private RelativeEncoder turnEncoder;
-
-        PIDController drivePIDController;
-        PIDController turnPIDController;
         
         public SwerveModule(int driveMotorPort, int steeringMotorPort, int absoluteEncoderPort) {
 
@@ -190,10 +198,6 @@ public class SwerveSubsystem extends SubsystemBase{
             
             driveEncoder = createEncoder(driveMotor);
             turnEncoder = createEncoder(turnMotor);
-            
-            drivePIDController = new PIDController(SwerveConstants.DRIVE_PID_VALUES[0], SwerveConstants.DRIVE_PID_VALUES[1], SwerveConstants.DRIVE_PID_VALUES[2]);
-            turnPIDController = new PIDController(SwerveConstants.TURN_PID_VALUES[0], SwerveConstants.TURN_PID_VALUES[1], SwerveConstants.TURN_PID_VALUES[2]);
-            turnPIDController.enableContinuousInput(-Math.PI / 2, Math.PI / 2);
             
             currentState = new SwerveModuleState(getVelocity(), getAngle());
             currentPosition = new SwerveModulePosition();
@@ -218,12 +222,7 @@ public class SwerveSubsystem extends SubsystemBase{
         }
 
         private RelativeEncoder createEncoder(CANSparkMax controller) {
-            // should be able to be used for both driving and turning encoder
-            // driving relative encoder only cares about velocity
-            // turning relative encoder only cares about position
             RelativeEncoder encoder = controller.getEncoder();
-    
-
             // convert from native unit of rpm to m/s
             encoder.setVelocityConversionFactor(SwerveConstants.VELOCITY_CONVERSION_FACTOR);
     
@@ -251,13 +250,13 @@ public class SwerveSubsystem extends SubsystemBase{
             return Rotation2d.fromRotations(getAbsoluteEncoderPos());
         }
 
-        public void setTargetState(SwerveModuleState targetState) {
+        public void setTargetState(SwerveModuleState targetState, PIDController drivePID, PIDController turnPID) {
             currentState = SwerveModuleState.optimize(targetState, getAngle());
             currentPosition = new SwerveModulePosition(currentPosition.distanceMeters + (currentState.speedMetersPerSecond * 0.02), currentState.angle);
 
-            final double driveOutput = drivePIDController.calculate(driveEncoder.getVelocity(), currentState.speedMetersPerSecond);
+            final double driveOutput = drivePID.calculate(driveEncoder.getVelocity(), currentState.speedMetersPerSecond);
 
-            final var turnOutput = turnPIDController.calculate(getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
+            final var turnOutput = turnPID.calculate(getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
 
             driveMotor.set(driveOutput);
             turnMotor.set(turnOutput);
