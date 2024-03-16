@@ -50,10 +50,10 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 40;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double[] FRONT_DRIVE_PID_VALUES = {0.04, 0.0, 0.0};
-    public static final double[] FRONT_TURN_PID_VALUES = {0.04, 0.0, 0.0};
+    public static final double[] FRONT_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
+    public static final double[] FRONT_TURN_PID_VALUES = {0.05, 0.0, 0.0};
     
-    public static final double[] BACK_DRIVE_PID_VALUES = {0.05, 0.0, 0.0};
+    public static final double[] BACK_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
     public static final double[] BACK_TURN_PID_VALUES = {0.05, 0.0, 0.0};
 
     public static final double PID_RANGE = 0.9;
@@ -102,9 +102,9 @@ public final class Constants {
 
     public static final double VOLTAGE_COMPENSATION = 10;
     public static final int CURRENT_LIMIT = 40;
-    public static final IdleMode IDLE_MODE = IdleMode.kBrake;
+    public static final IdleMode IDLE_MODE = IdleMode.kCoast;
     public static final double RAMP_RATE = 0.05;
-    public static final double MAX_POWER = 0.25;
+    public static final double MAX_POWER = 0.35;
 
     // 50:1 ratio
     public static final double POSITION_CONVERSION_FACTOR = 50 * 22 / 12;

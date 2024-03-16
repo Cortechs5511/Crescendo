@@ -243,7 +243,7 @@ public class SwerveSubsystem extends SubsystemBase{
         }
 
         public double getAbsoluteEncoderPos() {
-            return absoluteEncoder.getAbsolutePosition().getValueAsDouble()-0.5;
+            return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
         }
 
         public Rotation2d getAngle() {
