@@ -15,7 +15,7 @@ public class swerveDrive extends Command{
 
     @Override
     public void execute() {
-        swerve.drive(oi.getDriverLeftY(), oi.getDriverLeftX(), oi.getDriverRightX(), false);
+        swerve.drive(-oi.getDriverLeftY(), -oi.getDriverLeftX(), oi.getDriverRightX(), false);
         swerve.logStates();
     }
 

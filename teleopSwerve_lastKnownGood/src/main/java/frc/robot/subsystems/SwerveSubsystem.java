@@ -31,7 +31,8 @@ public class SwerveSubsystem extends SubsystemBase{
     
     private SwerveModule[] modules;
     private SwerveDriveKinematics kinematics;
-    private final PIDController[] PIDControllers;
+    private final PIDController[] drivePIDControllers;
+    private final PIDController[] turnPIDControllers;
     private Gyro gyro;
     private SwerveDriveOdometry odometry;
 
@@ -51,14 +52,20 @@ public class SwerveSubsystem extends SubsystemBase{
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[4], SwerveConstants.MODULE_TRANSLATIONS[5]),
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[6], SwerveConstants.MODULE_TRANSLATIONS[7])
         );
-        PIDControllers = new PIDController[] {
-            new PIDController(SwerveConstants.FRONT_DRIVE_PID_VALUES[0], SwerveConstants.FRONT_DRIVE_PID_VALUES[1], SwerveConstants.FRONT_DRIVE_PID_VALUES[2]),
-            new PIDController(SwerveConstants.FRONT_TURN_PID_VALUES[0], SwerveConstants.FRONT_TURN_PID_VALUES[1], SwerveConstants.FRONT_TURN_PID_VALUES[2]),
-            new PIDController(SwerveConstants.BACK_DRIVE_PID_VALUES[0], SwerveConstants.BACK_DRIVE_PID_VALUES[1], SwerveConstants.BACK_DRIVE_PID_VALUES[2]),
-            new PIDController(SwerveConstants.BACK_TURN_PID_VALUES[0], SwerveConstants.BACK_TURN_PID_VALUES[1], SwerveConstants.BACK_TURN_PID_VALUES[2])  
+        drivePIDControllers = new PIDController[] {
+            new PIDController(SwerveConstants.FL_DRIVE_PID_VALUES[0], SwerveConstants.FL_DRIVE_PID_VALUES[1], SwerveConstants.FL_DRIVE_PID_VALUES[2]),
+            new PIDController(SwerveConstants.FR_DRIVE_PID_VALUES[0], SwerveConstants.FR_DRIVE_PID_VALUES[1], SwerveConstants.FR_DRIVE_PID_VALUES[2]),
+            new PIDController(SwerveConstants.BL_DRIVE_PID_VALUES[0], SwerveConstants.BL_DRIVE_PID_VALUES[1], SwerveConstants.BL_DRIVE_PID_VALUES[2]),
+            new PIDController(SwerveConstants.BR_DRIVE_PID_VALUES[0], SwerveConstants.BR_DRIVE_PID_VALUES[1], SwerveConstants.BR_DRIVE_PID_VALUES[2])  
         };
-        PIDControllers[1].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
-        PIDControllers[3].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
+        turnPIDControllers = new PIDController[] {
+            new PIDController(SwerveConstants.FL_TURN_PID_VALUES[0], SwerveConstants.FL_TURN_PID_VALUES[1], SwerveConstants.FL_TURN_PID_VALUES[2]),
+            new PIDController(SwerveConstants.FR_TURN_PID_VALUES[0], SwerveConstants.FR_TURN_PID_VALUES[1], SwerveConstants.FR_TURN_PID_VALUES[2]),
+            new PIDController(SwerveConstants.BL_TURN_PID_VALUES[0], SwerveConstants.BL_TURN_PID_VALUES[1], SwerveConstants.BL_TURN_PID_VALUES[2]),
+            new PIDController(SwerveConstants.BR_TURN_PID_VALUES[0], SwerveConstants.BR_TURN_PID_VALUES[1], SwerveConstants.BR_TURN_PID_VALUES[2])  
+        };
+        drivePIDControllers[1].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
+        drivePIDControllers[3].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
 
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
         field = new Field2d();
@@ -151,10 +158,13 @@ public class SwerveSubsystem extends SubsystemBase{
         // add constant for max speed
         SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, SwerveConstants.MAX_TRANSLATIONAL_SPEED);
 
-       modules[0].setTargetState(targetStates[0], PIDControllers[0], PIDControllers[1]);
-       modules[1].setTargetState(targetStates[1], PIDControllers[0], PIDControllers[1]);
-       modules[2].setTargetState(targetStates[2], PIDControllers[2], PIDControllers[3]);
-       modules[3].setTargetState(targetStates[3], PIDControllers[2], PIDControllers[3]);
+       modules[0].setTargetState(targetStates[0], drivePIDControllers[0], turnPIDControllers[0]);
+       modules[1].setTargetState(targetStates[1], drivePIDControllers[1], turnPIDControllers[1]);
+       modules[2].setTargetState(targetStates[2], drivePIDControllers[2], turnPIDControllers[2]);
+       modules[3].setTargetState(targetStates[3], drivePIDControllers[3], turnPIDControllers[3]);
+    //    for (int i = 0; i<4; i++) {
+    //     modules[i].setTargetState(targetStates[i], drivePIDControllers[i], turnPIDControllers[i]);
+    //    }
     
     }
 
