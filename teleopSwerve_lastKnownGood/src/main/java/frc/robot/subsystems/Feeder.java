@@ -8,14 +8,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.IntakeConstants;
 
 public class Feeder extends SubsystemBase {
-    private final CANSparkMax feederMotor = createFeederController(52, false);
+    private final CANSparkMax topFeeder = createFeederController(IntakeConstants.TOP_FEEDER_ID, false);
+    private final CANSparkMax bottomFeeder = createFeederController(IntakeConstants.BOTTOM_FEEDER_ID, false);
 
     public Feeder() {
 
     }
 
     public void setPower(double power) {
-        feederMotor.set(power);
+        topFeeder.set(power);
+        bottomFeeder.set(power);
     }
     
     public CANSparkMax createFeederController(int port, boolean isInverted) {

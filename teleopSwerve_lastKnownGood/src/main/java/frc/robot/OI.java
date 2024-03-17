@@ -66,7 +66,7 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return -value;
+        return value;
     }
 
     public double getOperatorRightY() {

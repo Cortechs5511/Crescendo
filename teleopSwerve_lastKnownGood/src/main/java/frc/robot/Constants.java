@@ -57,10 +57,10 @@ public final class Constants {
     public static final double[] FR_TURN_PID_VALUES = {0.09, 0.0, 0.0};
     
     public static final double[] BL_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] BL_TURN_PID_VALUES = {0.05, 0.0, 0.0};
+    public static final double[] BL_TURN_PID_VALUES = {0.09, 0.0, 0.0};
     
     public static final double[] BR_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] BR_TURN_PID_VALUES = {0.05, 0.0, 0.0};
+    public static final double[] BR_TURN_PID_VALUES = {0.09, 0.0, 0.0};
 
     public static final double PID_RANGE = 0.9;
 
@@ -82,10 +82,11 @@ public final class Constants {
 
   public static class IntakeConstants {
     
-    public static final int TOP_WHEELS_ID = 51;
+    public static final int TOP_WHEELS_ID = 52;
     public static final int BOTTOM_WHEELS_ID = 50;  
-    public static final int FEEDER_ID = 52;
-  
+    public static final int TOP_FEEDER_ID = 53;
+    public static final int BOTTOM_FEEDER_ID = 51;
+
     public static final int INTAKE_CURRENT_LIMIT = 40;
     public static final double VOLTAGE_COMPENSATION = 10;
     public static final IdleMode INTAKE_IDLE_MODE = IdleMode.kCoast;
@@ -96,9 +97,9 @@ public final class Constants {
     
     
     public static final double SHOOTER_POWER = -0.3;
-    public static final double FEEDER_SHOOTER_POWER = -0.7;
+    public static final double FEEDER_SHOOTER_POWER = -1;
 
-    public static final double SPEAKER_POWER = -0.8;
+    public static final double SPEAKER_POWER = -1;
   }
 
   public static class WristConstants {
@@ -108,7 +109,7 @@ public final class Constants {
 
     public static final double VOLTAGE_COMPENSATION = 10;
     public static final int CURRENT_LIMIT = 40;
-    public static final IdleMode IDLE_MODE = IdleMode.kCoast;
+    public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;
     public static final double MAX_POWER = 0.35;
 

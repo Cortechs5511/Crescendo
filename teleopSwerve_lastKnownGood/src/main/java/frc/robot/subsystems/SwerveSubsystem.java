@@ -22,6 +22,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,6 +38,8 @@ public class SwerveSubsystem extends SubsystemBase{
     private SwerveDriveOdometry odometry;
 
     private Field2d field;
+
+    private XboxController driveController;
 
     public SwerveSubsystem() {
         gyro = new Gyro();
@@ -70,6 +73,8 @@ public class SwerveSubsystem extends SubsystemBase{
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
         field = new Field2d();
 
+        driveController = new XboxController(0);
+
         AutoBuilder.configureHolonomic(
             this::getPose, 
             this::resetPose, 
@@ -94,6 +99,23 @@ public class SwerveSubsystem extends SubsystemBase{
         odometry.update(gyro.getRotation2d(), getPositions());
         field.setRobotPose(getPose());
         logStates();
+        ChassisSpeeds controllerSpeeds = new ChassisSpeeds(
+            SwerveConstants.MAX_TRANSLATIONAL_SPEED * -driveController.getLeftY(), 
+            SwerveConstants.MAX_TRANSLATIONAL_SPEED * -driveController.getLeftX(), 
+            SwerveConstants.MAX_ROTATIONAL_SPEED * -driveController.getRightX()
+        );
+        SwerveModuleState[] controllerStates = kinematics.toSwerveModuleStates(controllerSpeeds);
+        double[] controllerStatesAsDoubles = {
+            controllerStates[0].angle.getRadians(),
+            controllerStates[0].speedMetersPerSecond,
+            controllerStates[1].angle.getRadians(),
+            controllerStates[1].speedMetersPerSecond,
+            controllerStates[2].angle.getRadians(),
+            controllerStates[2].speedMetersPerSecond,
+            controllerStates[3].angle.getRadians(),
+            controllerStates[3].speedMetersPerSecond,
+        };
+        SmartDashboard.putNumberArray("Controller State", controllerStatesAsDoubles);
     }
 
     public void drive(double y, double x, double theta, boolean fieldRelative) {

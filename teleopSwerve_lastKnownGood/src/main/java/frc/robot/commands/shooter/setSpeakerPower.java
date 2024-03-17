@@ -18,7 +18,7 @@ public class setSpeakerPower extends Command {
 
     @Override
     public void execute() {
-        intake.setTopWheels(IntakeConstants.SPEAKER_POWER);
+        intake.setTopWheels(IntakeConstants.SPEAKER_POWER * 15 / 16);
         intake.setBottomWheels(IntakeConstants.SPEAKER_POWER);
 
         wrist.setPosition(0.85);
