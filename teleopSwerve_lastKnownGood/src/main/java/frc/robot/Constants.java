@@ -10,8 +10,6 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
 
-import edu.wpi.first.hal.REVPHFaults;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -51,7 +49,7 @@ public final class Constants {
     public static final double RAMP_RATE = 0.05;
 
     public static final double[] FL_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] FL_TURN_PID_VALUES = {0.085, 0.004, 0.0};
+    public static final double[] FL_TURN_PID_VALUES = {0.09, 0.004, 0.0};
 
     public static final double[] FR_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
     public static final double[] FR_TURN_PID_VALUES = {0.09, 0.004, 0.0};
