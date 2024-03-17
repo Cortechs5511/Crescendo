@@ -67,8 +67,8 @@ public class SwerveSubsystem extends SubsystemBase{
             new PIDController(SwerveConstants.BL_TURN_PID_VALUES[0], SwerveConstants.BL_TURN_PID_VALUES[1], SwerveConstants.BL_TURN_PID_VALUES[2]),
             new PIDController(SwerveConstants.BR_TURN_PID_VALUES[0], SwerveConstants.BR_TURN_PID_VALUES[1], SwerveConstants.BR_TURN_PID_VALUES[2])  
         };
-        drivePIDControllers[1].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
-        drivePIDControllers[3].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
+        // drivePIDControllers[1].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
+        // drivePIDControllers[3].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
 
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
         field = new Field2d();
