@@ -64,9 +64,9 @@ public class RobotContainer {
     // Configure the trigger bindings
     drive.setDefaultCommand(new swerveDrive(drive));
     blinkin.setDefaultCommand(new setLEDAlliance(blinkin));
-    // wrist.setDefaultCommand(new setWristPower(wrist));
+    wrist.setDefaultCommand(new setWristPower(wrist));
     intake.setDefaultCommand(new setIntakePower(intake, blinkin));
-    // feeder.setDefaultCommand(new setFeederPower(feeder));
+    feeder.setDefaultCommand(new setFeederPower(feeder));
     configureBindings();
 
     

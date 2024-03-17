@@ -285,10 +285,16 @@ public class SwerveSubsystem extends SubsystemBase{
         public void setTargetState(SwerveModuleState targetState, PIDController drivePID, PIDController turnPID) {
             currentState = SwerveModuleState.optimize(targetState, getAngle());
             currentPosition = new SwerveModulePosition(currentPosition.distanceMeters + (currentState.speedMetersPerSecond * 0.02), currentState.angle);
-
+            double turnOutput;
             final double driveOutput = drivePID.calculate(driveEncoder.getVelocity(), currentState.speedMetersPerSecond);
 
-            final var turnOutput = turnPID.calculate(getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
+            if (getAbsoluteEncoderPos()*2*Math.PI - currentState.angle.getRadians() < Math.PI / 2) {
+                turnOutput = turnPID.calculate(getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
+            }
+            else {
+                turnOutput = turnPID.calculate(-getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
+            }
+            
 
             driveMotor.set(driveOutput);
             turnMotor.set(turnOutput);
