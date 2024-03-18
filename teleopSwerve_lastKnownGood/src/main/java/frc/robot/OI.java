@@ -34,7 +34,15 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return value;
+        if (driverController.getRightBumper()) {
+            return value * 0.5;
+        }
+        else if (driverController.getLeftBumper()) {
+            return value * 0.05;
+        }
+        else {
+            return value;
+        }
     }
 
     public double getOperatorLeftY() {
@@ -50,7 +58,15 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
-        return value;
+        if (driverController.getRightBumper()) {
+            return value * 0.5;
+        }
+        else if (driverController.getLeftBumper()) {
+            return value * 0.05;
+        }
+        else {
+            return value;
+        }
     }
 
     public double getOperatorLeftX() {
@@ -82,7 +98,15 @@ public class OI {
         if (Math.abs(value) < OIConstants.DEADBAND+0.1) {
             return 0;
         }
-        return value;
+        if (driverController.getRightBumper()) {
+            return value * 0.5;
+        }
+        else if (driverController.getLeftBumper()) {
+            return value * 0.05;
+        }
+        else {
+            return value;
+        }
     }
 
     public double getOperatorRightX() {

@@ -151,6 +151,7 @@ public class SwerveSubsystem extends SubsystemBase{
         };
         
         SmartDashboard.putNumberArray("Module State", loggingState);
+        SmartDashboard.putNumber("Gyro Radians", gyro.getRotation2d().getRadians());
     }
 
     public Pose2d getPose() {

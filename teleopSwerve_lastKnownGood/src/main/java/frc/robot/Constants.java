@@ -62,8 +62,8 @@ public final class Constants {
 
     public static final double PID_RANGE = 0.9;
 
-    public static final double MAX_TRANSLATIONAL_SPEED = 40;
-    public static final double MAX_ROTATIONAL_SPEED = 50;
+    public static final double MAX_TRANSLATIONAL_SPEED = 50;
+    public static final double MAX_ROTATIONAL_SPEED = 70;
 
     public static final double MAX_AUTON_SPEED = 4.5;
     public static final double DRIVE_BASE_RADIUS = Units.inchesToMeters(Math.sqrt(CHASSIS_LENGTH*CHASSIS_LENGTH+CHASSIS_WIDTH*CHASSIS_WIDTH));
@@ -94,7 +94,7 @@ public final class Constants {
     public static final double FEEDER_INTAKE_POWER = 0.2;
     
     
-    public static final double SHOOTER_POWER = -0.3;
+    public static final double SHOOTER_POWER = -0.25;
     public static final double FEEDER_SHOOTER_POWER = -1;
 
     public static final double SPEAKER_POWER = -1;
