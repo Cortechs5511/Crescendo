@@ -19,7 +19,7 @@ public class setSwerveState extends Command{
     @Override
     public void execute() {
         ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
-            4, 
+            10, 
             0,
             0
         );

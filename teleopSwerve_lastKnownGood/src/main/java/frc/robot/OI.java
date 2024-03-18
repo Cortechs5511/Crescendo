@@ -38,7 +38,7 @@ public class OI {
             return value * 0.5;
         }
         else if (driverController.getLeftBumper()) {
-            return value * 0.05;
+            return value * 0.1;
         }
         else {
             return value;
@@ -62,7 +62,7 @@ public class OI {
             return value * 0.5;
         }
         else if (driverController.getLeftBumper()) {
-            return value * 0.05;
+            return value * 0.1;
         }
         else {
             return value;
@@ -102,7 +102,7 @@ public class OI {
             return value * 0.5;
         }
         else if (driverController.getLeftBumper()) {
-            return value * 0.05;
+            return value * 0.1;
         }
         else {
             return value;

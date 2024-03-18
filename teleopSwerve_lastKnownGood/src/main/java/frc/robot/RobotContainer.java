@@ -10,6 +10,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.setFeederPower;
 import frc.robot.commands.setLEDAlliance;
+import frc.robot.commands.setSwerveState;
 import frc.robot.commands.swerveDrive;
 import frc.robot.commands.intake.setIntakePower;
 import frc.robot.commands.intake.setWristPower;
@@ -72,7 +73,7 @@ public class RobotContainer {
     
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
-    autoChooser.addOption("Set State", new SequentialCommandGroup());
+    autoChooser.addOption("Set State", new SequentialCommandGroup(new setSwerveState(drive)));
   }
 
   /**

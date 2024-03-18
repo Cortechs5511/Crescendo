@@ -32,8 +32,8 @@ public class SwerveSubsystem extends SubsystemBase{
     
     private SwerveModule[] modules;
     private SwerveDriveKinematics kinematics;
-    private final PIDController[] drivePIDControllers;
-    private final PIDController[] turnPIDControllers;
+    private final customPIDController[] drivePIDControllers;
+    private final customPIDController[] turnPIDControllers;
     private Gyro gyro;
     private SwerveDriveOdometry odometry;
 
@@ -55,17 +55,17 @@ public class SwerveSubsystem extends SubsystemBase{
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[4], SwerveConstants.MODULE_TRANSLATIONS[5]),
             new Translation2d(SwerveConstants.MODULE_TRANSLATIONS[6], SwerveConstants.MODULE_TRANSLATIONS[7])
         );
-        drivePIDControllers = new PIDController[] {
-            new PIDController(SwerveConstants.FL_DRIVE_PID_VALUES[0], SwerveConstants.FL_DRIVE_PID_VALUES[1], SwerveConstants.FL_DRIVE_PID_VALUES[2]),
-            new PIDController(SwerveConstants.FR_DRIVE_PID_VALUES[0], SwerveConstants.FR_DRIVE_PID_VALUES[1], SwerveConstants.FR_DRIVE_PID_VALUES[2]),
-            new PIDController(SwerveConstants.BL_DRIVE_PID_VALUES[0], SwerveConstants.BL_DRIVE_PID_VALUES[1], SwerveConstants.BL_DRIVE_PID_VALUES[2]),
-            new PIDController(SwerveConstants.BR_DRIVE_PID_VALUES[0], SwerveConstants.BR_DRIVE_PID_VALUES[1], SwerveConstants.BR_DRIVE_PID_VALUES[2])  
+        drivePIDControllers = new customPIDController[] {
+            new customPIDController(SwerveConstants.FL_DRIVE_PID_VALUES[0], SwerveConstants.FL_DRIVE_PID_VALUES[1], SwerveConstants.FL_DRIVE_PID_VALUES[2]),
+            new customPIDController(SwerveConstants.FR_DRIVE_PID_VALUES[0], SwerveConstants.FR_DRIVE_PID_VALUES[1], SwerveConstants.FR_DRIVE_PID_VALUES[2]),
+            new customPIDController(SwerveConstants.BL_DRIVE_PID_VALUES[0], SwerveConstants.BL_DRIVE_PID_VALUES[1], SwerveConstants.BL_DRIVE_PID_VALUES[2]),
+            new customPIDController(SwerveConstants.BR_DRIVE_PID_VALUES[0], SwerveConstants.BR_DRIVE_PID_VALUES[1], SwerveConstants.BR_DRIVE_PID_VALUES[2])  
         };
-        turnPIDControllers = new PIDController[] {
-            new PIDController(SwerveConstants.FL_TURN_PID_VALUES[0], SwerveConstants.FL_TURN_PID_VALUES[1], SwerveConstants.FL_TURN_PID_VALUES[2]),
-            new PIDController(SwerveConstants.FR_TURN_PID_VALUES[0], SwerveConstants.FR_TURN_PID_VALUES[1], SwerveConstants.FR_TURN_PID_VALUES[2]),
-            new PIDController(SwerveConstants.BL_TURN_PID_VALUES[0], SwerveConstants.BL_TURN_PID_VALUES[1], SwerveConstants.BL_TURN_PID_VALUES[2]),
-            new PIDController(SwerveConstants.BR_TURN_PID_VALUES[0], SwerveConstants.BR_TURN_PID_VALUES[1], SwerveConstants.BR_TURN_PID_VALUES[2])  
+        turnPIDControllers = new customPIDController[] {
+            new customPIDController(SwerveConstants.FL_TURN_PID_VALUES[0], SwerveConstants.FL_TURN_PID_VALUES[1], SwerveConstants.FL_TURN_PID_VALUES[2]),
+            new customPIDController(SwerveConstants.FR_TURN_PID_VALUES[0], SwerveConstants.FR_TURN_PID_VALUES[1], SwerveConstants.FR_TURN_PID_VALUES[2]),
+            new customPIDController(SwerveConstants.BL_TURN_PID_VALUES[0], SwerveConstants.BL_TURN_PID_VALUES[1], SwerveConstants.BL_TURN_PID_VALUES[2]),
+            new customPIDController(SwerveConstants.BR_TURN_PID_VALUES[0], SwerveConstants.BR_TURN_PID_VALUES[1], SwerveConstants.BR_TURN_PID_VALUES[2])  
         };
         // drivePIDControllers[1].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
         // drivePIDControllers[3].enableContinuousInput(-SwerveConstants.PID_RANGE, SwerveConstants.PID_RANGE);
@@ -152,6 +152,8 @@ public class SwerveSubsystem extends SubsystemBase{
         
         SmartDashboard.putNumberArray("Module State", loggingState);
         SmartDashboard.putNumber("Gyro Radians", gyro.getRotation2d().getRadians());
+
+        SmartDashboard.putNumber("Turn Velocity", modules[0].getTurnSpeed());
     }
 
     public Pose2d getPose() {
@@ -283,7 +285,7 @@ public class SwerveSubsystem extends SubsystemBase{
             return Rotation2d.fromRotations(getAbsoluteEncoderPos());
         }
 
-        public void setTargetState(SwerveModuleState targetState, PIDController drivePID, PIDController turnPID) {
+        public void setTargetState(SwerveModuleState targetState, customPIDController drivePID, customPIDController turnPID) {
             currentState = SwerveModuleState.optimize(targetState, getAngle());
             currentPosition = new SwerveModulePosition(currentPosition.distanceMeters + (currentState.speedMetersPerSecond * 0.02), currentState.angle);
             double turnOutput;
@@ -307,6 +309,9 @@ public class SwerveSubsystem extends SubsystemBase{
 
         public SwerveModulePosition getPosition() {
             return currentPosition;
+        }
+        public double getTurnSpeed() {
+            return turnMotor.get();
         }
     }
 
