@@ -149,9 +149,27 @@ public class OI {
         return value;
     }
 
+    public boolean operatorY() {
+        return operatorController.getYButton();
+    }
+    
+    public boolean operatorX() {
+        return operatorController.getXButton();
+    }
+    
+    public boolean operatorB() {
+        return operatorController.getBButton();
+    }
+
     
     public double getWristPower() {
-        return getOperatorLeftY();
+        if (operatorController.getLeftBumper()) {
+            return getOperatorLeftY()*0.5;
+        }
+        else{
+            return getOperatorLeftY();
+        }
+        
     }
 
     // public double getWristPosition() {

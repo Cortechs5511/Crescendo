@@ -8,6 +8,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.setClimberPower;
 import frc.robot.commands.setFeederPower;
 import frc.robot.commands.setLEDAlliance;
 import frc.robot.commands.setSwerveState;
@@ -18,6 +19,7 @@ import frc.robot.commands.shooter.setShooterPower;
 import frc.robot.commands.shooter.setSpeakerPower;
 import frc.robot.commands.intake.intakeGround;
 import frc.robot.commands.setLEDAlliance;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -50,6 +52,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Feeder feeder = new Feeder();
   private final LEDs blinkin = new LEDs();
+  private final Climber climber = new Climber();
 
   private final OI oi = OI.getInstance();
 
@@ -68,6 +71,7 @@ public class RobotContainer {
     wrist.setDefaultCommand(new setWristPower(wrist));
     intake.setDefaultCommand(new setIntakePower(intake, blinkin));
     feeder.setDefaultCommand(new setFeederPower(feeder));
+    climber.setDefaultCommand(new setClimberPower(climber));
     configureBindings();
 
     
@@ -94,9 +98,8 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    operatorController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     operatorController.rightTrigger().whileTrue(new setShooterPower(intake, feeder, blinkin));
-    operatorController.rightBumper().whileTrue(new setSpeakerPower(intake, wrist)); 
+    operatorController.rightBumper().whileTrue(new setSpeakerPower(intake, feeder, wrist)); 
   }
 
   /**

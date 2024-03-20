@@ -126,8 +126,8 @@ public final class Constants {
   }
 
   public static class ClimberConstants {
-    public static final int CLIMBER_L_ID = 1;
-    public static final int CLIMBER_R_ID = 1;
+    public static final int CLIMBER_L_ID = 8;
+    public static final int CLIMBER_R_ID = 9;
 
     public static final double VOLTAGE_COMPENSATION = 10;
     public static final int CURRENT_LIMIT = 40;

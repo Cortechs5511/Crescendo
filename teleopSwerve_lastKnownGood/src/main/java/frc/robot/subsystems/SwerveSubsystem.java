@@ -298,9 +298,14 @@ public class SwerveSubsystem extends SubsystemBase{
                 turnOutput = turnPID.calculate(-getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
             }
             
-
-            driveMotor.set(driveOutput);
+            // if (Math.abs(turnOutput) < 0.01) {
+            //     turnMotor.set(turnOutput*1.1);
+            // }
+            // else {
+            //     turnMotor.set(turnOutput);
+            // }
             turnMotor.set(turnOutput);
+            driveMotor.set(driveOutput);
         }
 
         public SwerveModuleState getState() {

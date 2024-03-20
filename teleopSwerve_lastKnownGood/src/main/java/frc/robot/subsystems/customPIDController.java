@@ -400,7 +400,7 @@ public class customPIDController implements Sendable, AutoCloseable {
     // If the absolute value of the position error is greater than IZone, reset the total error
     if (Math.abs(m_positionError) > m_iZone) {
       m_totalError = 0;
-    } else if (Math.abs(m_ki) <= 0.000000001) {
+    } else if (m_ki != 0) {
       m_totalError =
           MathUtil.clamp(
               m_totalError + m_positionError * m_period,
