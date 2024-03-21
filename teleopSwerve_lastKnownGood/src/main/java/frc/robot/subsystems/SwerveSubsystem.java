@@ -153,7 +153,12 @@ public class SwerveSubsystem extends SubsystemBase{
         SmartDashboard.putNumberArray("Module State", loggingState);
         SmartDashboard.putNumber("Gyro Radians", gyro.getRotation2d().getRadians());
 
-        SmartDashboard.putNumber("Turn Velocity", modules[0].getTurnSpeed());
+        SmartDashboard.putNumber("Swerve/Turn Velocity", modules[0].getTurnSpeed());
+
+        SmartDashboard.putNumber("Swerve/FL Velocity", modules[0].getVelocity());
+        SmartDashboard.putNumber("Swerve/FR Velocity", modules[1].getVelocity());
+        SmartDashboard.putNumber("Swerve/BL Velocity", modules[2].getVelocity());
+        SmartDashboard.putNumber("Swerve/BR Velocity", modules[3].getVelocity());
     }
 
     public Pose2d getPose() {
@@ -286,24 +291,20 @@ public class SwerveSubsystem extends SubsystemBase{
         }
 
         public void setTargetState(SwerveModuleState targetState, customPIDController drivePID, customPIDController turnPID) {
+            Rotation2d existingAngle = getAngle();
             currentState = SwerveModuleState.optimize(targetState, getAngle());
             currentPosition = new SwerveModulePosition(currentPosition.distanceMeters + (currentState.speedMetersPerSecond * 0.02), currentState.angle);
             double turnOutput;
             final double driveOutput = drivePID.calculate(driveEncoder.getVelocity(), currentState.speedMetersPerSecond);
 
-            if (getAbsoluteEncoderPos()*2*Math.PI - currentState.angle.getRadians() < Math.PI / 2) {
-                turnOutput = turnPID.calculate(getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
+            if (Math.abs(existingAngle.getRadians() - currentState.angle.getRadians()) < Math.PI / 2) {
+                turnOutput = turnPID.calculate(existingAngle.getRadians(), currentState.angle.getRadians());
             }
             else {
-                turnOutput = turnPID.calculate(-getAbsoluteEncoderPos()*2*Math.PI, currentState.angle.getRadians());
+                turnOutput = turnPID.calculate(-existingAngle.getRadians(), currentState.angle.getRadians());
             }
-            
-            // if (Math.abs(turnOutput) < 0.01) {
-            //     turnMotor.set(turnOutput*1.1);
-            // }
-            // else {
-            //     turnMotor.set(turnOutput);
-            // }
+    
+
             turnMotor.set(turnOutput);
             driveMotor.set(driveOutput);
         }
