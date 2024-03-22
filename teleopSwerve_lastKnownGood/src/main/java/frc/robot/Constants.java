@@ -49,16 +49,16 @@ public final class Constants {
     public static final double RAMP_RATE = 0.05;
 
     public static final double[] FL_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] FL_TURN_PID_VALUES = {0.20, 0.065, 0.02};
+    public static final double[] FL_TURN_PID_VALUES = {0.45, 0.065, 0.02};
 
     public static final double[] FR_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] FR_TURN_PID_VALUES = {0.20, 0.065, 0.02};
+    public static final double[] FR_TURN_PID_VALUES = {0.45, 0.065, 0.02};
     
     public static final double[] BL_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] BL_TURN_PID_VALUES = {0.15, 0.065, 0.02};
+    public static final double[] BL_TURN_PID_VALUES = {0.45, 0.065, 0.02};
     
     public static final double[] BR_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] BR_TURN_PID_VALUES = {0.15, 0.065, 0.02};
+    public static final double[] BR_TURN_PID_VALUES = {0.45, 0.065, 0.02};
 
     public static final double PID_RANGE = 0.9;
 
@@ -105,7 +105,7 @@ public final class Constants {
     public static final int WRIST_R_ID = 61;
     public static final int THROUGH_BORE_ID = 9;
 
-    public static final double VOLTAGE_COMPENSATION = 10;
+    public static final double VOLTAGE_COMPENSATION = 5;
     public static final int CURRENT_LIMIT = 40;
     public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;
@@ -129,7 +129,7 @@ public final class Constants {
     public static final int CLIMBER_L_ID = 8;
     public static final int CLIMBER_R_ID = 9;
 
-    public static final double VOLTAGE_COMPENSATION = 10;
+    public static final double VOLTAGE_COMPENSATION = 5;
     public static final int CURRENT_LIMIT = 40;
     public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;

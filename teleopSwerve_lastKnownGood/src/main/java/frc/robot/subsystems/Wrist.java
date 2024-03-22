@@ -51,10 +51,23 @@ public class Wrist extends SubsystemBase {
     }
 
     public void setPower(double power) {
-        wristLeft.set(power);
-        wristRight.set(power);
+        // 0.53, 0.6, 0.8, 0.99, 0, 0.04
+        if (power > 0 && getRawPosition() < 0.525 && getRawPosition() > 0.1) {
+            wristLeft.set(0);
+            wristRight.set(0);
+        }
+        else {
+            wristLeft.set(power);
+            wristRight.set(power);
+        }
+        
     }
+    // .62 SPEAKER POSITION
+    //0.615 611,612
 
+    // some distance away 6 in .617
+    // side, 625 631
+    // high 10 low 20s
     // set position of wrist given position range from 0.0-1.0 to encoder range
     public void setPosition(double desiredPos) {
         // convert given position from 0.0-1.0 to through bore encoder range
@@ -63,6 +76,17 @@ public class Wrist extends SubsystemBase {
         double wristOutput = wristPIDController.calculate(getRawPosition(), desiredPos);
         wristLeft.set(wristOutput);
         wristRight.set(wristOutput);
+    }
+
+    // 0.62
+    public void setSpeakerPosition(double position) {
+        if(getRawPosition() < position) {
+            setPower(-0.1);
+        }
+        else {
+            setPower(0);
+        }
+
     }
 
     public double getLeftRelativePosition() {
