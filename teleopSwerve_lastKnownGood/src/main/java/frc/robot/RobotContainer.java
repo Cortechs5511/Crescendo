@@ -13,6 +13,7 @@ import frc.robot.commands.setFeederPower;
 import frc.robot.commands.setLEDAlliance;
 import frc.robot.commands.setSwerveState;
 import frc.robot.commands.leftSideSpeakerAuto;
+import frc.robot.commands.rightSideSpeakerAuto;
 import frc.robot.commands.swerveDrive;
 import frc.robot.commands.intake.setIntakePower;
 import frc.robot.commands.intake.setWristPower;
@@ -79,6 +80,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", autoChooser);
     autoChooser.addOption("Set State", new SequentialCommandGroup(new setSwerveState(drive)));
     autoChooser.addOption("Left Side Speaker", new SequentialCommandGroup(new leftSideSpeakerAuto(drive, wrist, intake, feeder)));
+    autoChooser.addOption("Right Side Speaker", new SequentialCommandGroup(new rightSideSpeakerAuto(drive, wrist, intake, feeder)));
   }
 
   /**
@@ -100,7 +102,8 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     operatorController.rightTrigger().whileTrue(new setShooterPower(intake, feeder, blinkin));
-    operatorController.rightBumper().whileTrue(new setSpeakerPower(intake, feeder, wrist)); 
+    operatorController.rightBumper().whileTrue(new setSpeakerPower(intake, feeder, wrist, 0.632, 0.626)); 
+    operatorController.leftBumper().whileTrue(new setSpeakerPower(intake, feeder, wrist, 0.626, 0.620)); 
   }
 
   /**

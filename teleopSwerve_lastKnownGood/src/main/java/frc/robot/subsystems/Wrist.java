@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,6 +19,7 @@ public class Wrist extends SubsystemBase {
     private final RelativeEncoder leftRelativeEncoder = createEncoder(wristLeft);
     private final RelativeEncoder rightRelativeEncoder = createEncoder(wristRight);
     
+    private final PIDController wristPID = new PIDController(WristConstants.PID_VALUES[0], WristConstants.PID_VALUES[1], WristConstants.PID_VALUES[2]);
 
     private final DutyCycleEncoder absoluteEncoder = createDutyCycleEncoder(WristConstants.THROUGH_BORE_ID);
 
@@ -35,6 +37,10 @@ public class Wrist extends SubsystemBase {
     
     public double getRawPosition() {        
         return absoluteEncoder.getAbsolutePosition();
+    }
+
+    public double getRawDistance() {
+        return absoluteEncoder.getDistance();
     }
 
     // convert range of wrist from 0.525 to 1.0 and 0.0 to ~0.3
@@ -58,7 +64,7 @@ public class Wrist extends SubsystemBase {
 
     public void setPower(double power) {
         // 0.53, 0.6, 0.8, 0.99, 0, 0.04
-        if (power > 0 && getRawPosition() < 0.525 && getRawPosition() > 0.1) {
+        if (power > 0 && getRawDistance() < 0) {
             wristLeft.set(0);
             wristRight.set(0);
         }
@@ -66,16 +72,33 @@ public class Wrist extends SubsystemBase {
             wristLeft.set(power);
             wristRight.set(power);
         }
+        // wristLeft.set(power);
+        // wristRight.set(power);
+        
+    }
+
+    public double[] getPower() {
+        double[] currentPower = {wristLeft.get(), wristRight.get()};
+        return currentPower;
     }
 
     // 0.62
-    public void setPosition(double position) {
-        if (getRawPosition() < position) {
+    public void setDistance(double distance) {
+        if (getRawDistance() < distance) {
             setPower(-0.1);
         }
         else {
             setPower(0);
         }
+    }
+
+    public void setPositionPID(double position) {
+        double wristOutput = wristPID.calculate(getRawDistance(), position);
+        setPower(-wristOutput);
+    }
+
+    public void setPercentPosition(double percentPosition) {
+
     }
 
     public double getLeftRelativePosition() {
@@ -118,9 +141,12 @@ public class Wrist extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Wrist/Raw Position", getRawPosition());
+        SmartDashboard.putNumber("Wrist/Raw Distance", getRawDistance());
         SmartDashboard.putNumber("Wrist/Translated Position", getTranslatedPosition());
         
         SmartDashboard.putNumber("Wrist/Left Relative Position", getLeftRelativePosition());
         SmartDashboard.putNumber("Wrist/Right Relative Position", getRightRelativePosition());
+
+        SmartDashboard.putNumberArray("Wrist Powers", getPower());
     }
 }

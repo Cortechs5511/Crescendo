@@ -41,6 +41,7 @@ public class rightSideSpeakerAuto extends Command{
     @Override
     public void initialize() {
         timer.restart();
+        wrist.zero();
     }
 
     @Override
@@ -48,8 +49,18 @@ public class rightSideSpeakerAuto extends Command{
         
         // 0-3 second move robot
         if (!timer.hasElapsed(3)) {
-            wrist.setPosition(0.623);
+            wrist.setDistance(0.075);
         }
+        else if (timer.hasElapsed(12)) {
+            // feeder.setPower(-1);
+            ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
+            0, 
+            0,
+            -4
+            );
+            swerve.driveRobotRelative(newDesiredSpeeds);
+        }
+
         else if( timer.hasElapsed(5)) {
             feeder.setPower(0);
             intake.setBottomWheels(0);

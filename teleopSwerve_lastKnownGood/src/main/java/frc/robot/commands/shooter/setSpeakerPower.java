@@ -14,11 +14,17 @@ public class setSpeakerPower extends Command {
     private final Wrist wrist;
     private final Feeder feeder;
     private final Timer timer = new Timer();
+    double upperPosition;
+    double lowerPosition;
 
-    public setSpeakerPower(Intake intakeSubsystem, Feeder feederSubsystem, Wrist wristSubsystem) {
+    double targetPosition = 0.075;
+
+    public setSpeakerPower(Intake intakeSubsystem, Feeder feederSubsystem, Wrist wristSubsystem, double upperRange, double lowerRange) {
         intake = intakeSubsystem;
         feeder = feederSubsystem;
         wrist = wristSubsystem;
+        upperPosition = upperRange;
+        lowerPosition = lowerRange;
         addRequirements(intakeSubsystem);
         addRequirements(feederSubsystem);
         addRequirements(wristSubsystem);
@@ -33,8 +39,9 @@ public class setSpeakerPower extends Command {
     public void execute() {
         intake.setTopWheels(IntakeConstants.SPEAKER_POWER * 15 / 16);
         intake.setBottomWheels(IntakeConstants.SPEAKER_POWER);
-        wrist.setPosition(0.623);
-        if (timer.hasElapsed(1) && wrist.getRawPosition() <= 0.632 && wrist.getRawPosition() >= 0.626) {
+        wrist.setDistance(targetPosition);
+        // 0.626 and 0.620
+        if (timer.hasElapsed(1) && wrist.getRawDistance() <= targetPosition + 0.003 && wrist.getRawDistance() >= targetPosition - 0.003) {
             feeder.setPower(-1);
         }
 

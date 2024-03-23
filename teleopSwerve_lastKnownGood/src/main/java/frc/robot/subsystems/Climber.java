@@ -11,7 +11,7 @@ import frc.robot.Constants.ClimberConstants;
 
 public class Climber extends SubsystemBase {
     private final CANSparkMax leftClimber = createClimberController(ClimberConstants.CLIMBER_L_ID, false);
-    private final CANSparkMax rightClimber = createClimberController(ClimberConstants.CLIMBER_R_ID, false);
+    private final CANSparkMax rightClimber = createClimberController(ClimberConstants.CLIMBER_R_ID, true);
     
     private final RelativeEncoder leftRelativeEncoder = createClimberEncoder(leftClimber);
     private final RelativeEncoder rightRelativeEncoder = createClimberEncoder(rightClimber);

@@ -160,6 +160,10 @@ public class OI {
     public boolean operatorB() {
         return operatorController.getBButton();
     }
+    
+    public boolean operatorA() {
+        return operatorController.getBButton();
+    }
 
     
     public double getWristPower() {
