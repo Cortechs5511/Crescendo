@@ -33,7 +33,8 @@ public class setSpeakerPower extends Command {
     public void execute() {
         intake.setTopWheels(IntakeConstants.SPEAKER_POWER * 15 / 16);
         intake.setBottomWheels(IntakeConstants.SPEAKER_POWER);
-        if (timer.hasElapsed(1)) {
+        wrist.setPosition(0.623);
+        if (timer.hasElapsed(1) && wrist.getRawPosition() <= 0.632 && wrist.getRawPosition() >= 0.626) {
             feeder.setPower(-1);
         }
 

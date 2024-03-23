@@ -17,16 +17,18 @@ public class setClimberPower extends Command {
     @Override
     public void execute() {
         if (oi.operatorY()) {
-            climber.setPower(0.3);
+            // climber.setPower(0.3);
+            climber.setLeftPower(0.3);
         }
         else if (oi.operatorX()) {
             climber.setLeftPower(-0.3);
         }
         else if (oi.operatorB()) {
-            climber.setRightPower(-0.3);
+            // climber.setRightPower(-0.3);
         }
         else {
-            climber.setPower(0);
+            // climber.setPower(0);
+            climber.setLeftPower(0);
         }
         
     }

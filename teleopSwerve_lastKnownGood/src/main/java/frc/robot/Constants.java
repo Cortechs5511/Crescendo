@@ -114,11 +114,11 @@ public final class Constants {
     // 50:1 ratio
     public static final double POSITION_CONVERSION_FACTOR = 50 * 22 / 12;
     // position of intake when up
-    public static final double MAX_POS = 0.25;
+    public static final double MAX_POS = 0.8;
     // position of intake when down (intaking)
     public static final double MIN_POS = 0;
     // range of positions
-    public static final double RANGE = 1 / 0.3975;
+    public static final double RANGE = MAX_POS - MIN_POS;
     public static final double OFFSET = 1-0.878;
     // min 0.2755
     // max 0.878

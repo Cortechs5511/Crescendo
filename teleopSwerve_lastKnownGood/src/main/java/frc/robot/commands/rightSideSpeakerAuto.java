@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class sideSpeakerAuto extends Command{
+public class rightSideSpeakerAuto extends Command{
     private final SwerveSubsystem swerve;
     private final Wrist wrist;
     private final Intake intake;
@@ -27,7 +27,7 @@ public class sideSpeakerAuto extends Command{
     private final Optional<Alliance> ally = DriverStation.getAlliance();
     private double translationPower;
 
-    public sideSpeakerAuto(SwerveSubsystem driveSubsystem, Wrist wristSubsystem, Intake intakeSubsystem, Feeder feederSubsystem) {
+    public rightSideSpeakerAuto(SwerveSubsystem driveSubsystem, Wrist wristSubsystem, Intake intakeSubsystem, Feeder feederSubsystem) {
         swerve = driveSubsystem;
         wrist = wristSubsystem;
         intake = intakeSubsystem;
@@ -41,15 +41,6 @@ public class sideSpeakerAuto extends Command{
     @Override
     public void initialize() {
         timer.restart();
-        // if (ally.isPresent()) {
-        //     if (ally.get() == Alliance.Red) {
-        //         translationPower = -0.5;
-        //     }
-        //     if (ally.get() == Alliance.Blue) {
-        //         translationPower = 0.5;
-        //     }
-        // }
-        
     }
 
     @Override
@@ -57,7 +48,7 @@ public class sideSpeakerAuto extends Command{
         
         // 0-3 second move robot
         if (!timer.hasElapsed(3)) {
-            wrist.setSpeakerPosition(0.623);
+            wrist.setPosition(0.623);
         }
         else if( timer.hasElapsed(5)) {
             feeder.setPower(0);
@@ -65,7 +56,7 @@ public class sideSpeakerAuto extends Command{
             intake.setTopWheels(0);
             ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
             -5, 
-            5,
+            -5,
             0
         );
             swerve.driveRobotRelative(newDesiredSpeeds);
@@ -80,19 +71,7 @@ public class sideSpeakerAuto extends Command{
             intake.setTopWheels(IntakeConstants.SPEAKER_POWER * 15 / 16);
             intake.setBottomWheels(IntakeConstants.SPEAKER_POWER);
         }
-
-        
-        else {
-            // feeder.setPower(0);
-            // intake.setPower(0);
-            // wrist.setPower(0);
-            // ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
-            // -translationPower, 
-            // 5,
-            // 0);
-            // swerve.driveRobotRelative(newDesiredSpeeds);
-            
-
+        else {   
         }
         
         
