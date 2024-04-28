@@ -78,7 +78,7 @@ public class RobotContainer {
     
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
-    autoChooser.addOption("Set State", new SequentialCommandGroup(new setSwerveState(drive)));
+    autoChooser.addOption("Set State", new SequentialCommandGroup(new setSwerveState(drive, 0, -5, 0)));
     autoChooser.addOption("Left Side Speaker", new SequentialCommandGroup(new leftSideSpeakerAuto(drive, wrist, intake, feeder)));
     autoChooser.addOption("Right Side Speaker", new SequentialCommandGroup(new rightSideSpeakerAuto(drive, wrist, intake, feeder)));
   }

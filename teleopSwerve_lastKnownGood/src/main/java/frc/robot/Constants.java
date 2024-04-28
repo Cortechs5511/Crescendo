@@ -110,7 +110,7 @@ public final class Constants {
     public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     public static final double RAMP_RATE = 0.05;
 
-    public static final double[] PID_VALUES = {0.02, 0.0, 0.0};
+    public static final double[] PID_VALUES = {0.25, 0.3, 0.0};
 
     public static final double MAX_POWER = 0.35;
 

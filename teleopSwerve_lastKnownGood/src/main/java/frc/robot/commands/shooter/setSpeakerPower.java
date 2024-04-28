@@ -8,7 +8,6 @@ import frc.robot.subsystems.Feeder;
 
 import edu.wpi.first.wpilibj.Timer;
 
-
 public class setSpeakerPower extends Command {
     private final Intake intake;
     private final Wrist wrist;
@@ -17,9 +16,10 @@ public class setSpeakerPower extends Command {
     double upperPosition;
     double lowerPosition;
 
-    double targetPosition = 0.075;
+    double targetPosition = 0.082;
 
-    public setSpeakerPower(Intake intakeSubsystem, Feeder feederSubsystem, Wrist wristSubsystem, double upperRange, double lowerRange) {
+    public setSpeakerPower(Intake intakeSubsystem, Feeder feederSubsystem, Wrist wristSubsystem, double upperRange,
+            double lowerRange) {
         intake = intakeSubsystem;
         feeder = feederSubsystem;
         wrist = wristSubsystem;
@@ -40,8 +40,13 @@ public class setSpeakerPower extends Command {
         intake.setTopWheels(IntakeConstants.SPEAKER_POWER * 15 / 16);
         intake.setBottomWheels(IntakeConstants.SPEAKER_POWER);
         wrist.setDistance(targetPosition);
+        // wrist.setPositionPID(targetPosition);
         // 0.626 and 0.620
-        if (timer.hasElapsed(1) && wrist.getRawDistance() <= targetPosition + 0.003 && wrist.getRawDistance() >= targetPosition - 0.003) {
+        // if (timer.hasElapsed(1) && wrist.getRawDistance() <= targetPosition + 0.003
+        // && wrist.getRawDistance() >= targetPosition - 0.003) {
+        // feeder.setPower(-1);
+        // }
+        if (timer.hasElapsed(1)) {
             feeder.setPower(-1);
         }
 

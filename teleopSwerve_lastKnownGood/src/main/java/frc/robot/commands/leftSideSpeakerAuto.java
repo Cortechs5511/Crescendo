@@ -59,14 +59,14 @@ public class leftSideSpeakerAuto extends Command{
         
         // 0-3 second move robot
         if (!timer.hasElapsed(3)) {
-            wrist.setDistance(0.075);
+            wrist.setDistance(0.081);
         }
         else if (timer.hasElapsed(12)) {
             // feeder.setPower(-1);
             ChassisSpeeds newDesiredSpeeds = new ChassisSpeeds(
             0, 
             0,
-            4
+            -4
             );
             swerve.driveRobotRelative(newDesiredSpeeds);
         }

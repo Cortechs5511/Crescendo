@@ -28,19 +28,16 @@ public class OI {
         return oi;
     }
 
-
     public double getDriverLeftY() {
-        double value = driverController.getLeftY();
+        double value = driverController.getLeftY() * 0.4;
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
         if (driverController.getRightBumper()) {
             return value * 0.5;
-        }
-        else if (driverController.getLeftBumper()) {
+        } else if (driverController.getLeftBumper()) {
             return value * 0.1;
-        }
-        else {
+        } else {
             return value;
         }
     }
@@ -54,17 +51,15 @@ public class OI {
     }
 
     public double getDriverLeftX() {
-        double value = driverController.getLeftX();
+        double value = driverController.getLeftX() * 0.4;
         if (Math.abs(value) < OIConstants.DEADBAND) {
             return 0;
         }
         if (driverController.getRightBumper()) {
             return value * 0.5;
-        }
-        else if (driverController.getLeftBumper()) {
+        } else if (driverController.getLeftBumper()) {
             return value * 0.1;
-        }
-        else {
+        } else {
             return value;
         }
     }
@@ -95,16 +90,14 @@ public class OI {
 
     public double getDriverRightX() {
         double value = driverController.getRightX();
-        if (Math.abs(value) < OIConstants.DEADBAND+0.1) {
+        if (Math.abs(value) < OIConstants.DEADBAND + 0.1) {
             return 0;
         }
         if (driverController.getRightBumper()) {
             return value * 0.5;
-        }
-        else if (driverController.getLeftBumper()) {
+        } else if (driverController.getLeftBumper()) {
             return value * 0.1;
-        }
-        else {
+        } else {
             return value;
         }
     }
@@ -152,33 +145,27 @@ public class OI {
     public boolean operatorY() {
         return operatorController.getYButton();
     }
-    
+
     public boolean operatorX() {
         return operatorController.getXButton();
     }
-    
+
     public boolean operatorB() {
         return operatorController.getBButton();
     }
-    
+
     public boolean operatorA() {
-        return operatorController.getBButton();
+        return operatorController.getAButton();
     }
 
-    
     public double getWristPower() {
-        if (operatorController.getLeftBumper()) {
-            return getOperatorLeftY()*0.5;
-        }
-        else{
-            return getOperatorLeftY();
-        }
-        
+        return getOperatorLeftY();
+
     }
 
     // public double getWristPosition() {
-    //     // convert joystick range to 0-1
-    //     return (getOperatorLeftY()+1)/2;
+    // // convert joystick range to 0-1
+    // return (getOperatorLeftY()+1)/2;
     // }
 
     public double getIntakePower() {
@@ -190,9 +177,13 @@ public class OI {
     }
 
     public double getFeederPower() {
-        return getOperatorRightY();
-    }
+        if (operatorController.getLeftBumper()) {
+            return getOperatorRightY() * 0.5;
+        } else {
+            return getOperatorRightY();
+        }
 
+    }
 
     /**
      * Sets rumble value of controller to specified intensity

@@ -18,24 +18,23 @@ public class Wrist extends SubsystemBase {
 
     private final RelativeEncoder leftRelativeEncoder = createEncoder(wristLeft);
     private final RelativeEncoder rightRelativeEncoder = createEncoder(wristRight);
-    
-    private final PIDController wristPID = new PIDController(WristConstants.PID_VALUES[0], WristConstants.PID_VALUES[1], WristConstants.PID_VALUES[2]);
+
+    private final PIDController wristPID = new PIDController(WristConstants.PID_VALUES[0], WristConstants.PID_VALUES[1],
+            WristConstants.PID_VALUES[2]);
 
     private final DutyCycleEncoder absoluteEncoder = createDutyCycleEncoder(WristConstants.THROUGH_BORE_ID);
-
 
     public Wrist() {
         zero();
     }
-    
+
     public void zero() {
         absoluteEncoder.reset();
         leftRelativeEncoder.setPosition(0);
         rightRelativeEncoder.setPosition(0);
     }
 
-    
-    public double getRawPosition() {        
+    public double getRawPosition() {
         return absoluteEncoder.getAbsolutePosition();
     }
 
@@ -49,11 +48,9 @@ public class Wrist extends SubsystemBase {
         double rawPosition = getRawPosition();
         if (rawPosition >= 0.525) {
             return rawPosition - 0.525;
-        }
-        else {
+        } else {
             return rawPosition + 0.525;
         }
-
 
     }
 
@@ -64,21 +61,27 @@ public class Wrist extends SubsystemBase {
 
     public void setPower(double power) {
         // 0.53, 0.6, 0.8, 0.99, 0, 0.04
-        if (power > 0 && getRawDistance() < 0) {
-            wristLeft.set(0);
-            wristRight.set(0);
-        }
-        else {
-            wristLeft.set(power);
-            wristRight.set(power);
-        }
+        // if (power > 0 && getRawDistance() < 0) {
+        // wristLeft.set(0);
+        // wristRight.set(0);
+        // }
+        // else if (power < 0 && getRawDistance() > 0.601) {
+        // wristLeft.set(0);
+        // wristRight.set(0);
+        // }
+        // else {
         // wristLeft.set(power);
         // wristRight.set(power);
-        
+        // }
+        wristLeft.set(power);
+        wristRight.set(power);
+        // wristLeft.set(power);
+        // wristRight.set(power);
+
     }
 
     public double[] getPower() {
-        double[] currentPower = {wristLeft.get(), wristRight.get()};
+        double[] currentPower = { wristLeft.get(), wristRight.get() };
         return currentPower;
     }
 
@@ -86,8 +89,7 @@ public class Wrist extends SubsystemBase {
     public void setDistance(double distance) {
         if (getRawDistance() < distance) {
             setPower(-0.1);
-        }
-        else {
+        } else {
             setPower(0);
         }
     }
@@ -108,7 +110,7 @@ public class Wrist extends SubsystemBase {
     public double getRightRelativePosition() {
         return rightRelativeEncoder.getPosition();
     }
-    
+
     private CANSparkMax createWristController(int port, boolean isInverted) {
         CANSparkMax controller = new CANSparkMax(port, MotorType.kBrushless);
         controller.restoreFactoryDefaults();
@@ -116,7 +118,7 @@ public class Wrist extends SubsystemBase {
         controller.enableVoltageCompensation(WristConstants.VOLTAGE_COMPENSATION);
         controller.setIdleMode(WristConstants.IDLE_MODE);
         controller.setOpenLoopRampRate(WristConstants.RAMP_RATE);
-        controller.setClosedLoopRampRate(WristConstants.RAMP_RATE); 
+        controller.setClosedLoopRampRate(WristConstants.RAMP_RATE);
 
         controller.setSmartCurrentLimit(WristConstants.CURRENT_LIMIT);
 
@@ -143,7 +145,7 @@ public class Wrist extends SubsystemBase {
         SmartDashboard.putNumber("Wrist/Raw Position", getRawPosition());
         SmartDashboard.putNumber("Wrist/Raw Distance", getRawDistance());
         SmartDashboard.putNumber("Wrist/Translated Position", getTranslatedPosition());
-        
+
         SmartDashboard.putNumber("Wrist/Left Relative Position", getLeftRelativePosition());
         SmartDashboard.putNumber("Wrist/Right Relative Position", getRightRelativePosition());
 
