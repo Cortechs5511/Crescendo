@@ -61,20 +61,18 @@ public class Wrist extends SubsystemBase {
 
     public void setPower(double power) {
         // 0.53, 0.6, 0.8, 0.99, 0, 0.04
-        // if (power > 0 && getRawDistance() < 0) {
-        // wristLeft.set(0);
-        // wristRight.set(0);
-        // }
-        // else if (power < 0 && getRawDistance() > 0.601) {
-        // wristLeft.set(0);
-        // wristRight.set(0);
-        // }
-        // else {
-        // wristLeft.set(power);
-        // wristRight.set(power);
-        // }
+        if (power > 0 && getRawPosition() < 0.17) {
+        wristLeft.set(0);
+        wristRight.set(0);
+        }
+        else if (power < 0 && getRawPosition() > 0.78) {
+        wristLeft.set(0);
+        wristRight.set(0);
+        }
+        else {
         wristLeft.set(power);
         wristRight.set(power);
+        }
         // wristLeft.set(power);
         // wristRight.set(power);
 

@@ -55,7 +55,7 @@ public final class Constants {
     public static final double[] FR_TURN_PID_VALUES = {0.45, 0.065, 0.02};
     
     public static final double[] BL_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
-    public static final double[] BL_TURN_PID_VALUES = {0.45, 0.065, 0.02};
+    public static final double[] BL_TURN_PID_VALUES = {0.44, 0.065, 0.02};
     
     public static final double[] BR_DRIVE_PID_VALUES = {0.02, 0.0, 0.0};
     public static final double[] BR_TURN_PID_VALUES = {0.45, 0.065, 0.02};
@@ -103,7 +103,7 @@ public final class Constants {
   public static class WristConstants {
     public static final int WRIST_L_ID = 60;
     public static final int WRIST_R_ID = 61;
-    public static final int THROUGH_BORE_ID = 9;
+    public static final int THROUGH_BORE_ID = 8;
 
     public static final double VOLTAGE_COMPENSATION = 5;
     public static final int CURRENT_LIMIT = 40;

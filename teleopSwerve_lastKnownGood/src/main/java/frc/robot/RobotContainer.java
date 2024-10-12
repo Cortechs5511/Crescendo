@@ -53,7 +53,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Feeder feeder = new Feeder();
   private final LEDs blinkin = new LEDs();
-  private final Climber climber = new Climber();
+  // private final Climber climber = new Climber();
 
   private final OI oi = OI.getInstance();
 
@@ -72,7 +72,7 @@ public class RobotContainer {
     wrist.setDefaultCommand(new setWristPower(wrist));
     intake.setDefaultCommand(new setIntakePower(intake, blinkin));
     feeder.setDefaultCommand(new setFeederPower(feeder));
-    climber.setDefaultCommand(new setClimberPower(climber));
+    // climber.setDefaultCommand(new setClimberPower(climber));
     configureBindings();
 
     

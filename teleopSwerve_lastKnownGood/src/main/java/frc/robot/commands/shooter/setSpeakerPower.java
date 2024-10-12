@@ -39,7 +39,7 @@ public class setSpeakerPower extends Command {
     public void execute() {
         intake.setTopWheels(IntakeConstants.SPEAKER_POWER * 15 / 16);
         intake.setBottomWheels(IntakeConstants.SPEAKER_POWER);
-        wrist.setDistance(targetPosition);
+        // wrist.setDistance(targetPosition);
         // wrist.setPositionPID(targetPosition);
         // 0.626 and 0.620
         // if (timer.hasElapsed(1) && wrist.getRawDistance() <= targetPosition + 0.003
