@@ -118,7 +118,7 @@ public class SwerveSubsystem extends SubsystemBase{
         SmartDashboard.putNumberArray("Controller State", controllerStatesAsDoubles);
     }
 
-    public void drive(double y, double x, double theta, boolean fieldRelative) {
+    public void drive(double y, double x, double theta, boolean fieldRelative, boolean reverse) {
         odometry.update(gyro.getRotation2d(), getPositions());
 
         field.setRobotPose(getPose());
@@ -128,6 +128,13 @@ public class SwerveSubsystem extends SubsystemBase{
             SwerveConstants.MAX_TRANSLATIONAL_SPEED * x,
             SwerveConstants.MAX_ROTATIONAL_SPEED * theta
         );
+        if (reverse) {
+            newDesiredSpeeds = new ChassisSpeeds(
+                -5, 
+                0,
+                0
+            );
+        }
 
         if (fieldRelative) {
             driveFieldRelative(newDesiredSpeeds);
