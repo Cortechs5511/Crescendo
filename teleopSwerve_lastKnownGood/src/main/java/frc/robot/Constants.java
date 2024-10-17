@@ -95,7 +95,7 @@ public final class Constants {
     
     
     public static final double SHOOTER_POWER = -0.25;
-    public static final double FEEDER_SHOOTER_POWER = -1;
+    public static final double FEEDER_SHOOTER_POWER = -0.7;
 
     public static final double SPEAKER_POWER = -1;
   }

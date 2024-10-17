@@ -118,7 +118,7 @@ public class SwerveSubsystem extends SubsystemBase{
         SmartDashboard.putNumberArray("Controller State", controllerStatesAsDoubles);
     }
 
-    public void drive(double y, double x, double theta, boolean fieldRelative, boolean reverse) {
+    public void drive(double y, double x, double theta, boolean fieldRelative, boolean reverse, boolean reset) {
         odometry.update(gyro.getRotation2d(), getPositions());
 
         field.setRobotPose(getPose());
@@ -134,6 +134,12 @@ public class SwerveSubsystem extends SubsystemBase{
                 0,
                 0
             );
+        }
+
+        if (reset) {
+            for (int i = 0; i < 4; i++) {
+                turnPIDControllers[i].reset();
+            }
         }
 
         if (fieldRelative) {
