@@ -21,8 +21,11 @@ public class setWristPower extends Command {
 
     @Override
     public void execute() {
-        wrist.setPower(oi.getWristPower()*WristConstants.MAX_POWER);
-    
+        if (oi.operatorA()) {
+            wrist.setSpeakerAngle(oi.getWristPower()*WristConstants.MAX_POWER);
+        } else {
+            wrist.setPower(oi.getWristPower()*WristConstants.MAX_POWER);
+        }
         SmartDashboard.putNumber("OI/Wrist Power", oi.getWristPower());
     }
 }

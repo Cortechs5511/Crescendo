@@ -59,13 +59,21 @@ public class Wrist extends SubsystemBase {
         return (getTranslatedPosition() - WristConstants.MIN_POS) / WristConstants.RANGE;
     }
 
+    public void setSpeakerAngle(double power) {
+        if (power < 0 && getRawPosition() > 0.32) {
+            setPower(0);
+        } else {
+            setPower(power);
+        }
+    }
+
     public void setPower(double power) {
         // 0.53, 0.6, 0.8, 0.99, 0, 0.04
         if (power > 0 && getRawPosition() < 0.17) {
         wristLeft.set(0);
         wristRight.set(0);
         }
-        else if (power < 0 && getRawPosition() > 0.78) {
+        else if (power < 0 && getRawPosition() > 0.83) {
         wristLeft.set(0);
         wristRight.set(0);
         }

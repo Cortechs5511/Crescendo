@@ -118,7 +118,7 @@ public class SwerveSubsystem extends SubsystemBase{
         SmartDashboard.putNumberArray("Controller State", controllerStatesAsDoubles);
     }
 
-    public void drive(double y, double x, double theta, boolean fieldRelative, boolean reverse, boolean reset) {
+    public void drive(double y, double x, double theta, boolean fieldRelative, boolean reverse, boolean resetPID, boolean resetGyro) {
         odometry.update(gyro.getRotation2d(), getPositions());
 
         field.setRobotPose(getPose());
@@ -130,16 +130,20 @@ public class SwerveSubsystem extends SubsystemBase{
         );
         if (reverse) {
             newDesiredSpeeds = new ChassisSpeeds(
-                -5, 
-                0,
+                0, 
+                -5,
                 0
             );
         }
 
-        if (reset) {
+        if (resetPID) {
             for (int i = 0; i < 4; i++) {
                 turnPIDControllers[i].reset();
             }
+        }
+
+        if (resetGyro) {
+            gyro.resetGyro();
         }
 
         if (fieldRelative) {
@@ -341,6 +345,10 @@ public class SwerveSubsystem extends SubsystemBase{
 
         public Rotation2d getRotation2d() {
             return navx.getRotation2d();
+        }
+
+        public void resetGyro() {
+            navx.reset();
         }
     }
 
