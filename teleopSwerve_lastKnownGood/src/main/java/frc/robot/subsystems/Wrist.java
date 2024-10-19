@@ -63,7 +63,7 @@ public class Wrist extends SubsystemBase {
         if (power < 0 && getRawPosition() > 0.32) {
             setPower(0);
         } else {
-            setPower(power);
+            setPower(power*0.5);
         }
     }
 
