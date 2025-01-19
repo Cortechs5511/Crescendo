@@ -151,7 +151,7 @@ public class Wrist extends SubsystemBase {
     private DutyCycleEncoder createDutyCycleEncoder(int channel) {
         DutyCycleEncoder encoder = new DutyCycleEncoder(channel);
         encoder.setDutyCycleRange(0, WristConstants.RANGE);
-        encoder.setPositionOffset(WristConstants.OFFSET);
+        // encoder.setPositionOffset(WristConstants.OFFSET);
         return encoder;
     }
 

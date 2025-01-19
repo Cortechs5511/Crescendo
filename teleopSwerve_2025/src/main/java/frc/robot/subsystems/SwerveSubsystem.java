@@ -3,7 +3,8 @@ package frc.robot.subsystems;
 import frc.robot.Constants.SwerveConstants;
 
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
-import com.kauailabs.navx.frc.AHRS;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -384,12 +385,38 @@ public class SwerveSubsystem extends SubsystemBase{
 
     // Gyro Class
     class Gyro {
-        private AHRS navx = new AHRS(Port.kMXP);
+        private AHRS navx = new AHRS(NavXComType.kMXP_SPI);  
 
+        // public Rotation2d getRotation2d() {
+            // Rotation3d rot3d = getCurrentRotation3d();
+            // Rotation2d rot2d = new Rotation2d(rot3d.getX(), rot3d.getY());
+            // return rot2d;
+        // }
+        
         public Rotation2d getRotation2d() {
-            Rotation3d rot3d = navx.getRotation3d();
-            Rotation2d rot2d = new Rotation2d(rot3d.getX(), rot3d.getY());
-            return rot2d;
+            // Get yaw in degrees from the navX
+            double yawDegrees = navx.getYaw(); 
+            
+            // Convert degrees to radians (Rotation2d uses radians)
+            double yawRadians = Math.toRadians(yawDegrees);
+            
+            // Create and return a Rotation2d object
+            return new Rotation2d(yawRadians);
+        }
+
+        public Rotation3d getCurrentRotation3d() {
+            // Get yaw, pitch, and roll from the navX
+            double yawDegrees = navx.getYaw();   // Yaw in degrees
+            double pitchDegrees = navx.getPitch(); // Pitch in degrees
+            double rollDegrees = navx.getRoll();  // Roll in degrees
+    
+            // Convert degrees to radians (Rotation3d uses radians)
+            double yawRadians = Math.toRadians(yawDegrees);
+            double pitchRadians = Math.toRadians(pitchDegrees);
+            double rollRadians = Math.toRadians(rollDegrees);
+    
+            // Create and return a Rotation3d object
+            return new Rotation3d(rollRadians, pitchRadians, yawRadians);
         }
 
         public void resetGyro() {
